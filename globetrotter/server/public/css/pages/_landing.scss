@@ -1,0 +1,16 @@
+@import "../themes/flatly/variables";
+
+#heading {
+  img {
+    display: initial;
+  }
+}
+
+#info {
+  text-align: center;
+
+  .info-icon {
+    font-size: 120px;
+    color: $brand-primary;
+  }
+}

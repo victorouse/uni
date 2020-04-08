@@ -1,0 +1,179 @@
+ol > .issuelist {
+    padding: 15px;
+}
+
+.issue-item {
+    padding: 10px;
+}
+
+.issuelist-editable > li {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    margin-left: -20px;
+}
+
+.issuelist-editable > ul {
+    clear: left;
+    padding: 3px 0px 3px 10px;
+    margin: 0px;
+}
+
+.issuelist-editable > li > input {
+    float: left;
+    margin-right: 15px;
+    margin-top: 0px;
+    width: 25px;
+    height: 25px;
+}
+
+.issuelist > li > a {
+    margin-right: 10px;
+}
+
+.issuelist-editable > li > label > a {
+    line-height: 1.7;
+}
+
+.issuelist-editable > li > label {
+    font-weight: normal;
+}
+
+.tag {
+    margin-right: 5px;
+}
+
+.issue-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.author {
+    font-size: 12px;    
+}
+
+.votebox-author {
+    margin-right: 37px;
+}
+
+.votes {
+    margin-right: 15px;
+    margin-top: 5px;
+    float: left;
+}
+
+.vote-up {
+    background-color: #C8F0C8 !important;    
+}
+
+.vote-down {
+    background-color: #DBA8A8 !important;    
+}
+
+.update-info {
+   font-size: 12px; 
+}
+
+.reply {
+    cursor: pointer;
+}
+
+.tag {
+    font-size: 10px;
+}
+
+.updowns {
+    font-size: 10px;
+}
+
+.upvotes {
+    color: green;
+}
+
+.downvotes {
+    color: red;
+}
+
+.score-column {
+    vertical-align: middle !important;
+    font-size: large;
+    width: 50px;
+    text-align: center;
+}
+
+.votes-column {
+    vertical-align: middle !important;
+    line-height: 38px !important;
+    width: 70px;
+}
+
+.issue-table {
+    margin-left:20px;
+    padding-right: 40px;
+    border-collapse: separate !important;
+}
+
+.topic-body {
+    padding-bottom: 0;
+}
+
+.title-tags {
+    vertical-align: middle !important;
+}
+
+.issue-table > tbody > tr > td {
+    border-top: none;
+}
+
+.vote-column {
+    vertical-align: middle !important;
+}
+
+.comment-reply {
+    margin-left: 5%;
+}
+
+.panel-reply {
+    margin-top: -15px;
+}
+
+.post-title {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.block-reply {
+    padding: 0;
+}
+
+.panel-title > a {
+    text-decoration: none;
+}
+
+.panel-heading {
+    overflow: hidden !important;
+}
+
+.panel-pad {
+    margin-bottom: 10px !important;
+}
+
+.panel-nopad {
+    padding-bottom: 0;
+}
+
+.vote-form {
+    display: inline;
+    float: left;
+}
+
+.edit-menu {
+    min-width: 85px;
+    margin-left: -50px;
+}
+
+.author-btn-group {
+    float: left;
+    position: absolute;
+    margin-left: 4px;
+}

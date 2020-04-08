@@ -1,0 +1,223 @@
+{include="header3"}
+	<div class="container">
+		<!-- Displays general info -->
+		<h1 id="address">{$address}</h1>
+		<a class="btn btn-primary" href="newsfeed.php?property=
+			{$results['property_id']}">Newsfeed</a> <a class="btn btn-primary" 
+			href="view.php?property={$results['property_id']}">
+			Property Information</a>
+		<hr>
+		<!-- Pull information and present as collapsable items -->
+		<div class="accordion" id="accordion">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+								<h3>Rent Financials</h3>
+							</a>
+						</div>
+						<div id="collapseTwo" class="accordion-body collapse in">
+							<div class="accordion-inner">
+								<!-- Checks for rent values -->
+								{if="$rent"}
+									<blockquote>With this tool you can see all rent payments made to this property between selected dates.</blockquote>
+									<div class="row">
+										<!-- Form to handle dates for financials search -->
+										<form id="datesearch" class="form-horizontal" method="post" action="property_financials.php">
+											<input type="hidden" name="property" value="{$results['property_id']}">
+											<div class="col-md-9 col-sm-12 col-xs-12">
+												<div class="input-group">
+													<input type="text" name="start" id="start" class="form-control datepicker" data-date-format="yyyy-mm-dd" data-date="2013-07-01" placeholder="2013-07-01"> 
+													<span class="input-group-addon">
+														to
+													</span> 
+													<input type="text" id="end" name="end" class="datepicker form-control" data-date-format="yyyy-mm-dd" data-date="2014-07-01" placeholder="2014-07-01">
+													<span class="input-group-btn">
+														<button type="submit" name="search" value="Search" class="btn btn-success">Search</button>
+													</span>
+												</div>
+											</div>
+										</form>
+									</div>
+									<!-- Table to display financial information -->
+									<div class="table-responsive">
+										<table class="table table-striped" style="width:100%">
+											<thead>
+												<tr>
+													<td>
+														<b>Tenant Name</b>
+													</td>
+													<td>
+														<b>Amount</b>
+													</td>
+													<td>
+														<b>Date</b>
+													</td>
+													<td>
+														<b>Type</b>
+													</td>
+													<td>
+														<b>Comment</b>
+													</td>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Loop through rent payments, displays amount and comment in table -->
+												{loop="rent"}
+													<tr>
+														<td>{$value.name}</td>
+														<td>${$value.rent/100}</td>
+														<td>{$value.datetime}</td>
+														<td>{$value.type}</td>
+														<td>{$value.comment}</td>
+													</tr>
+												{/loop}
+											</tbody>
+										</table>
+									
+										<a class="btn btn-primary" href="property_financials.php?add=true&property={$results['property_id']}">Make Payment</a>
+									</div>
+								{else}
+									<div class="row">
+										<!-- Form to handle dates for financials search -->
+										<form id="datesearch" class="form-horizontal" method="post" action="property_financials.php">
+											<input type="hidden" name="property" value="{$results['property_id']}">
+											<div class="col-md-9 col-sm-12 col-xs-12">
+												<div class="input-group">
+													<input type="text" name="start" id="start" class="form-control datepicker" data-date-format="yyyy-mm-dd" data-date="2013-07-01" placeholder="2013-07-01"> 
+													<span class="input-group-addon">
+														to
+													</span> 
+													<input type="text" id="end" name="end" class="datepicker form-control" data-date-format="yyyy-mm-dd" data-date="2014-07-01" placeholder="2014-07-01">
+													<span class="input-group-btn">
+														<button type="submit" name="search" value="Search" class="btn btn-success">Search</button>
+													</span>
+												</div>
+											</div>
+										</form>
+									</div>
+									<p>
+										No rent in this time frame.
+									</p>
+								
+									<a class="btn btn-primary" style="margin-top:10px" href="property_financials.php?add=true&property={$results['property_id']}">Make Payment</a>
+								{/if}
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div class="col-md-12">
+					<!-- Automatic payments section -->
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapsePayments">
+								<h3>Automatic Payments</h3>
+							</a>
+						</div>
+						<div id="collapsePayments" class="accordion-body collapse in">
+							<blockquote>{$website_name} allows you to automatically pay your rent on time with a credit card. Every night, payments that have been scheduled for this day are processed and sent to your agent.
+							</blockquote>
+							<div class="accordion-inner">
+								<p>
+									<a class="btn btn-success" href="setupPayment.php?property={$property_id}">Setup Automatic Payment</a>
+									<!-- Table to display current payment schedule -->
+									<div class="table-responsive">
+										<table class="table table-striped">
+											<thead>
+												<tr>
+													<td><b>Action</b></td>
+													<td>
+														<b>Day of fortnight</b>
+													</td>
+													<td>
+														<b>Card Number</b>
+													</td>
+													<td>
+														<b>Amount in cents</b>
+													</td>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- Loop through existing schedules and display them -->
+												{loop="schedules"}
+													<tr>
+														<td>
+															<!-- Form to handle edit, cancel and removing payment schedules -->
+															<form class="form" action="api/recurring.php" method="POST">
+																<a class="btn btn-primary" href="editPayment.php?payment_id={$value.recurring_payment_id}">
+																	<span class="glyphicon glyphicon-pencil"></span> Edit</a>
+																<input type="hidden" name="api" value="remove">
+																<input type="hidden" name="payment_id" value="{$value.recurring_payment_id}">
+																<input type="hidden" name="property_id" value="{$property_id}">
+																<a id="cancel{$value.recurring_payment_id}" class="btn btn-default hidden-btn"><span class="glyphicon glyphicon-stop"></span> Cancel</a>
+																<a class="btn btn-danger remove-btn" confirm=0 value="{$value.recurring_payment_id}"><span class="glyphicon glyphicon-remove"></span> Remove</a>
+															</form>
+														</td>
+														<td>
+															{$value.day}
+														</td>
+														<td>
+															{$value.display_number}
+														</td>
+														<td>
+															{$value.amount}
+														</td>
+													</tr>
+												{/loop}
+											</tbody>
+										</table>
+									</div>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{include="footer3"}
+<script src="js/bootstrap-datepicker.js">
+</script>
+<script>
+$('#start').datepicker()
+    .on('changeDate', function(e){
+        var y = e.date.getFullYear(),
+            _m = e.date.getMonth() + 1,
+            m = (_m > 9 ? _m : '0'+_m),
+            _d = e.date.getDate(),
+            d = (_d > 9 ? _d : '0'+_d);
+        $(this).text(y + '-' + m + '-' + d);
+    });
+	
+$('#end').datepicker()
+    .on('changeDate', function(e){
+        var y = e.date.getFullYear(),
+            _m = e.date.getMonth() + 1,
+            m = (_m > 9 ? _m : '0'+_m),
+            _d = e.date.getDate(),
+            d = (_d > 9 ? _d : '0'+_d);
+        $(this).text(y + '-' + m + '-' + d);
+    });
+	
+</script>
+<script>
+$(function(){
+	$(".remove-btn").click(function(){
+		var confirmed = $(this).attr("confirm");
+		if(confirmed==0){
+			var num = $(this).attr("value");
+			$("#cancel"+num).show();
+			$(this).attr("confirm", 1);
+		}else{
+			$(this).parent("form").submit();
+		}
+	});
+	$(".hidden-btn").click(function(){
+		$(this).hide();
+		$(this).next(".remove-btn").attr("confirm", 0);
+	});
+	$(".hidden-btn").hide();
+});
+</script>

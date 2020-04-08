@@ -1,0 +1,79 @@
+{include="header3"}
+		<body>   
+			<div class="container">
+				<br />
+				<legend>Add Property</legend>
+				<p>On this page you can add a property into WallFly. It will 
+					automatically assign you as the managing agent and then 
+					take you to a property view page to assign or invite 
+					tenants and owners.</p>
+				<div class="well">
+					<!--This is a form to add a property to the database-->
+					<form id="signup" class="form-horizontal" method="post" 
+						action="api/property.php">
+						<input type="hidden" name="agent_id" value="{$agent_id}">
+						<div class="control-group">
+							<!--This is the field to add an address-->
+							<label class="control-label">Address: </label>
+							<div class="controls">
+								<div class="input-prepend">
+									<span class="add-on"><i 
+										class="icon-map-marker"></i></span>
+									<input type="text" class="input-xlarge" 
+										id="address" name="address" 
+										placeholder="Address">
+								</div>
+							</div>
+						</div>
+						<div class="control-group ">
+							<!--This is the field to add a suburb-->
+							<label class="control-label">Suburb: </label>
+							<div class="controls">
+								<div class="input-prepend">
+									<span class="add-on"><i 
+										class="icon-map-marker"></i></span>
+									<input type="text" class="input-xlarge" 
+										id="suburb" name="suburb" 
+										placeholder="Suburb">
+								</div>
+							</div>
+						</div>
+				
+						<div class="control-group">
+							<!--This is the field to add a state, it is a drop
+								down box with all the states-->
+							<label class="control-label">State: </label>
+							<div class="controls">
+								<div class="input-prepend">
+								<span class="add-on">
+									<i class="icon-map-marker"></i></span>
+									<select name="state">
+										<option value="QLD">QLD</option>
+										<option value="NSW">NSW</option>
+										<option value="NT">NT</option>
+										<option value="ACT">ACT</option>
+										<option value="VIC">VIC</option>
+										<option value="SA">SA</option>
+										<option value="WA">WA</option>
+										<option value="TAS">TAS</option>
+									</select>
+									
+								</div>
+							</div>
+						</div>
+
+						<div class="control-group">
+							<label class="control-label"></label>
+							<div class="controls">
+								<!--This is the button to submit and to add 
+									the property to the database-->
+								<button type="submit" name="api" value="addProperty"
+									class="btn btn-success" >Add Property</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<hr>
+			</div>
+		</body>
+	</html>

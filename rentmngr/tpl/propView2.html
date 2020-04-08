@@ -1,0 +1,220 @@
+{include="header3"}
+	<div class="container">
+		<h1>{$address}</h1>
+		<a class="btn btn-primary" href="newsfeed.php?property=
+			{$results['property_id']}">Newsfeed</a> <a class="btn btn-primary" 
+			href="property_financials.php?property={$results['property_id']}">
+			Property Financials</a>
+		<hr>
+		<!-- Pull information and present as collapsable items -->
+		<div class="accordion" id="accordion">
+			<div class="row">
+				<div class="col-md-6">
+					<!--Property Details-->
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" 
+								data-parent="#accordion" href="#collapseOne">
+								<h3>Property Details</h3>
+							</a>
+						</div>
+						<div id="collapseOne" class="accordion-body collapse in">
+							<div class="accordion-inner">
+								<p>
+									<b>Address:</b> {$results["address"]}, 
+										{$results["suburb"]}<br>
+									<b>State:</b> {$results["state"]}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="accordion-group">
+						<!--Tenancy details-->
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" 
+								data-parent="#accordion" href="#collapseThree">
+								<h3>Tenancy Details</h3>
+							</a>
+						</div>
+						<div id="collapseThree" class="accordion-body collapse in">
+							<div class="accordion-inner">
+								<!--Checks if a tenant has been referred, provides the option to remove the referral if so-->
+								{if="$referred_tenant"}
+									An email has been sent to {$referred_tenant['email_address']}. <br>
+									<form method="link" action="api/referral.php">
+										<input type="hidden" name="referral_id" value="{$referred_tenant['referrerid']}">
+										<input type="hidden" name="property_id" value="{$referred_tenant['property_id']}">
+										<button type="submit" name="api" value= "deleteReferralById" class="btn btn-danger" >
+											Remove Referral?
+										</button>
+									</form>
+								{else}
+									<!--Display tenant information if available-->
+									{if="$results['TenantName']"}
+										<b>Current Tenancy</b><br>
+										<b>Name</b>: <a href="view.php?user={$results.tenant_id}">{$results["TenantName"]}</a><br>
+										<b>Tenancy Date</b>: {$results["start_date"]}
+										to {$results["end_date"]}</br>
+										<br>
+									{else}
+										{if="$user_type=='Agent'"}
+											<!-- if no tenant offer a submission field if the user is an agent-->
+											<form class="form-inline" role="form" id="tenant" method="post" action="api/referral.php?type=Tenant&propertyID={$results['property_id']}">
+												<div class="form-group">
+													<label for="tenant_email">Add in an email address for the tenant you are signing up to the property.
+													</label>
+													<div class="form-group">
+														<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+														<input type="text" class="form-control" id="tenant_email" name="email" placeholder=
+														"email@example.com">
+													</div>
+													<div class="form-group">
+														<label for="tenancy_dates">Add in a start date and end date for the tenancy.
+														</label>
+														<input type="text" name="start_date" id="start_date" class="form-control" data-date-format="yyyy-mm-dd" data-date="2013-02-20" placeholder="Start Date">
+														<input type="text" id="end_date" name="end_date" class="form-control" data-date-format="yyyy-mm-dd" data-date="2013-02-20" placeholder="End Date">
+													</div>
+													<div class="form-group">
+														<label for="rent_amount">Add in the nominal rent in cents for this property (e.g. $200 = 20000)
+														</label>
+														<input type="number" class="form-control" id="rent_amount" name="rent_amount" placeholder=	"200">
+														<select name="period" class="form-control">
+															<option value="day">Daily</option>
+															<option value="week">Weekly</option>
+															<option value="fortnight">Fortnightly</option>
+														</select>
+													</div>
+												</div>
+												<div class="control-group">
+													<label class="control-label"></label>
+													<input type="hidden" name="api" value="addReferral">
+													<div class="controls">
+														<button type="submit" class="btn btn-success" >Add Tenant
+														</button>
+													</div>
+												</div>
+											</form>
+										{else}
+											Only an agent can add tenants to a property.
+										{/if}
+									{/if}
+								{/if}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="accordion-group">
+				<!--Owner Details-->
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+						<h3>Owner Details</h3>
+					</a>
+				</div>
+				<div id="collapseTwo" class="accordion-body collapse in">
+					<div class="accordion-inner">
+						<!--Checks if a owner has been referred, provides the option to remove the referral if so-->
+						{if="$referred_owner"}
+							An email has been sent to {$referred_owner['email_address']}. 
+							<br>
+							<form method="link" action="api/referral.php">
+								<input type="hidden" name="referral_id" value="{$referred_owner['referrerid']}">
+								<input type="hidden" name="property_id" value="{$referred_owner['property_id']}">
+								<button type="submit" name="api" value= "deleteReferralById" class="btn	btn-fail" >Remove Referral?
+								</button>
+							</form>
+						{else}
+							<!--Display owner notification information if available-->
+							{if="$results['OwnerName']"}
+								<p>
+									<b>Name:</b> <a href="view.php?user={$results.owner_id}">{$results["OwnerName"]}</a><br>
+									<div class="table-responsive">
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<td><b>Type of Issue</b></td>
+													<td><b>Notify</b></td>
+												</tr>
+											</thead>
+											<tr>
+												<td>Structural</td>
+												<td> {if="$results['notify_structural']"}Yes{else}No{/if}</td>
+											</tr>
+											<tr>
+												<td>Plumbing</td>
+												<td> {if="$results['notify_plumbing']"}Yes{else}No{/if}</td>
+											</tr>
+											<tr>
+												<td>Electrical</td>
+												<td>{if="$results['notify_electrical']"}Yes{else}No{/if}</td>
+											</tr>	
+											<tr>
+												<td>Security</td>
+												<td>{if="$results['notify_security']"} Yes{else}No{/if}</td>
+											</tr>
+										</table>
+									</div>
+								</p>
+							{else}
+								{if="$user_type=='Agent'"}
+                                    <!-- if no owner offer a submission field, if the user is an agent-->
+                                    <form id="owner" method="post" action="api/referral.php?type=Owner&propertyID={$results['property_id']}">
+                                        <div class="control-group">
+                                            <label class="control-label">
+												Type in an email address below to add an owner to this property: 
+                                            </label>
+                                            <div class="controls">
+                                                <div class="input-prepend">
+                                                    <span class="add-on"><i class="icon-user"></i></span>
+                                                    <input type="text" class="input-xlarge" id="email" name="email" placeholder="Email">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+											<label class="control-label"></label>
+                                            <div class="controls">
+                                                <button type="submit" name="api" value= "addReferral" class="btn btn-success" >
+													Add Owner
+                                                </button>
+                                            </div>
+                                        </div>
+									</form>
+                                {else}
+                                    Only an agent can add owners to a property.
+                                {/if}
+							{/if}
+						{/if}
+					</div>
+				</div>
+			</div>
+			<hr>
+		</div>
+	</div>
+{include="footer3"}
+
+<script src="js/bootstrap-datepicker.js">
+</script>
+<script>
+$('#start_date').datepicker()
+    .on('changeDate', function(e){
+        var y = e.date.getFullYear(),
+            _m = e.date.getMonth() + 1,
+            m = (_m > 9 ? _m : '0'+_m),
+            _d = e.date.getDate(),
+            d = (_d > 9 ? _d : '0'+_d);
+        $(this).text(y + '-' + m + '-' + d);
+    });
+	
+$('#end_date').datepicker()
+    .on('changeDate', function(e){
+        var y = e.date.getFullYear(),
+            _m = e.date.getMonth() + 1,
+            m = (_m > 9 ? _m : '0'+_m),
+            _d = e.date.getDate(),
+            d = (_d > 9 ? _d : '0'+_d);
+        $(this).text(y + '-' + m + '-' + d);
+    });
+</script>

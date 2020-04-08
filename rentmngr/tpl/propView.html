@@ -1,0 +1,89 @@
+{include="header"}
+ <div class="container" style="padding-top:20px;">
+		<h1>{$add}</h1>
+		<hr>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<td>
+						<b>Agent Name</b>
+					</td>
+					<td>
+						<b>Owner Name</b>
+					</td>
+					<td>
+						<b>Tenant Name</b>
+					</td>
+					<td>
+						<b>Property Address</b>
+					</td>
+					<td>
+						<b>Suburb</b>
+					</td>
+					<td>
+						<b>State</b>
+					</td>
+				</tr>
+			</thead>
+			
+			<tbody>
+				{loop="results"}
+				<tr>
+					<td>{$value.agent_name}</td>
+					
+					{if="$value.owner_name == ''"}
+		<td> <form id="owner" class="form-horizontal" method="post" action="addReferral.php?type=owner&propertyID={$value.property_id}">
+		<div class="control-group">
+	        <label class="control-label">Email: </label>
+			<div class="controls">
+			    <div class="input-prepend">
+				<span class="add-on"><i class="icon-user"></i></span>
+					<input type="text" class="input-xlarge" id="email" name="email" placeholder="Email">
+				</div>
+			</div>
+		</div>
+		
+			<div class="control-group">
+				<label class="control-label"></label>
+					<div class="controls">
+						<button type="submit" class="btn btn-success" >Add Owner</button>
+					</div>
+			</div>
+		</form></td>
+					{else}
+						<td>{$value.owner_name}</td>
+					{/if}
+					
+					{if="$value.tenant_name == ''"}
+						<td> <form id="tenant" class="form-horizontal" method="post" action="addReferral.php?type=tenant&propertyID={$value.property_id}">
+		<div class="control-group">
+	        <label class="control-label">Email: </label>
+			<div class="controls">
+			    <div class="input-prepend">
+				<span class="add-on"><i class="icon-user"></i></span>
+					<input type="text" class="input-xlarge" id="email" name="email" placeholder="Email">
+				</div>
+			</div>
+		</div>
+		
+			<div class="control-group">
+				<label class="control-label"></label>
+					<div class="controls">
+						<button type="submit" class="btn btn-success" >Add Owner</button>
+					</div>
+			</div>
+		</form></td>
+					{else}
+						<td>{$value.tenant_name}</td>
+					{/if}
+					
+					<td>{$value.address}</td>
+					<td>{$value.suburb}</td>
+					<td>{$value.state}</td>
+				</tr>
+				{/loop}
+			</tbody>
+
+		</table>
+</div>
+{include="footer"}

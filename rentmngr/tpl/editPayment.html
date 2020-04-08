@@ -1,0 +1,172 @@
+{include="header3"}
+<div class="container">
+<h1>Edit Automatic Payment</h1>
+
+{if="$card_details!=null"}
+    <form class="form" action="api/recurring.php" method="POST">
+	<div class="row">
+
+	
+		<div class="col-md-6">
+		<blockquote class="visible-xs">Tip: Here you can edit automatic payments for your tenancy. Select a credit card, day of the fortnight and amount to pay and {$website_name} does the rest.
+</blockquote>
+	<table class="table table-striped">
+		<thead>
+			<label><strong>Select a card:</strong></label>
+		</thead>
+        <tbody>
+        {loop="$card_details"}
+		<tr>
+			<td>
+			<p><input value="{$value['cus_token']}" name="cus_token" type="radio" {if="$value['cus_token']==$cus_token"}checked{/if}>&nbsp;<span class="glyphicon glyphicon-credit-card"></span> {$value["display_number"]}</p>
+			</td>
+		</tr>
+        {/loop}
+        </tbody>
+    </table>
+	
+	<label>
+        <strong>Nominate the amount (in dollars) to pay in rent each fortnight.</strong>
+    </label>
+    <blockquote>Your required rent has been prefilled but you may elect 
+        to choose an amount higher or lower than this and manage your rent other ways.
+    </blockquote>
+	<div class="input-group">
+        <span class="input-group-addon">$</span>
+        <input class="form-control" name="amount" value="{$rent_amount}">
+    </div>
+	</div>
+	
+	    <div class="col-md-6">
+		<blockquote class="hidden-xs">Tip: Here you can edit automatic payments for your tenancy. Select a credit card, day of the fortnight and amount to pay and {$website_name} does the rest.
+</blockquote>
+	</div>
+	</div>
+    <hr>
+ 
+    <!-- I don't like these radio buttons, i want to use nested buttons but not good enough with bootstrap to do it -->
+
+	
+ 	<div class="row">
+	<div class="col-md-12 col-xs-12">
+	    <label>
+        <strong>Select a day of the fortnight to be charged for rent:</strong>
+    </label>
+	</div>
+	<div class="col-md-3 col-xs-6">
+	This Week
+	</div>
+
+	
+	<div class="col-md-3 col-xs-6">
+	Next Week
+	</div>
+	</div>
+	<div class="row">
+	<div class="col-md-3 col-xs-6">
+    <div class="btn-group-xs ">
+		
+        <label class="btn btn-primary active" style="width:70%; margin-top:10px">
+            <input type="radio" class="pull-left" name="day" id="day1" value="1" checked>
+            Monday
+        </label>
+    
+    
+        <label class="btn btn-primary" style="width:70%; margin-top:10px">
+            <input type="radio" class="pull-left" name="day" id="day2" value="2">
+            Tuesday
+        </label>
+    
+   
+        <label class="btn btn-primary" style="width:70%; margin-top:10px">
+            <input type="radio" class="pull-left" name="day" id="day3" value="3">
+            Wednesday
+        </label>
+    
+    
+        <label class="btn btn-primary" style="width:70%; margin-top:10px">
+            <input type="radio" class="pull-left" name="day" id="day4" value="4">
+            Thursday
+        </label>
+		
+        <label class="btn btn-primary" style="width:70%; margin-top:10px">
+            <input type="radio" class="pull-left" name="day" id="day5" value="5">
+            Friday
+        </label>
+    
+    
+        <label class="btn btn-primary" style="width:70%; margin-top:10px">
+            <input type="radio" class="pull-left" name="day" id="day6" value="6">
+            Saturday
+        </label>
+    
+    
+        <label class="btn btn-primary" style="width:70%; margin-top:10px">
+            <input type="radio" class="pull-left" name="day" id="day7" value="7">
+            Sunday
+        </label>
+    </div>
+	</div>
+	<div class="col-md-3 col-xs-6">
+    <div class="btn-group-xs">
+ <label class="btn btn-success" style="width:70%; margin-top:10px">
+            <input type="radio" class="pull-left" name="day" id="day8" value="8">
+            Monday
+        </label>
+    
+   
+        <label class="btn btn-success" style="width:70% ; margin-top:10px">
+            <input type="radio" class="pull-left" name="day" id="day9" value="9">
+            Tuesday
+        </label>
+    
+ 
+        <label class="btn btn-success" style="width:70% ; margin-top:10px"> 
+            <input type="radio" class="pull-left" name="day" id="day10" value="10">
+            Wednesday
+        </label>
+
+   
+        <label class="btn btn-success" style="width:70%; margin-top:10px">
+            <input type="radio"  class="pull-left" name="day" id="day11" value="11">
+            Thursday
+        </label>
+
+ 
+        <label class="btn btn-success" style="width:70%; margin-top:10px">
+            <input type="radio" class="pull-left" name="day" id="day12" value="12">
+            Friday
+        </label>
+
+ 
+        <label class="btn btn-success" style="width:70%; margin-top:10px">
+            <input type="radio" class="pull-left" name="day" id="day13" value="13">
+            Saturday
+        </label>
+   
+ 
+        <label class="btn btn-success" style="width:70%; margin-top:10px">
+            <input type="radio" class="pull-left" name="day" id="day14" value="14">
+            Sunday
+        </label>
+		
+			</div>
+	</div>
+	</div>
+	<hr>
+    
+    <input type="hidden" name="api" value="edit">
+    <input type="hidden" name="property_id" value="{$property_id}">
+    <input type="hidden" name="payment_id" value="{$payment_id}">
+    <br>
+    <input type="submit" class="btn btn-primary" value="Edit Automatic Payment">&nbsp;<a class="btn btn-warning" href="property_financials.php?property={$property_id}">Cancel</a>
+    </form>
+{else}
+<p>You need to set up a credit card in your <a href="account.php">account settings</a></p>
+
+{/if}
+<hr>
+    
+</div>
+
+{include="footer3"}

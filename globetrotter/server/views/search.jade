@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  #search-main
+    != markup
+  script#initial-state(type='application/json') !{JSON.stringify(state)}
+
+block append scripts
+  script(type='text/javascript', src='https://maps.googleapis.com/maps/api/js?key=AIzaSyCqkTpFcT0c3L8XhqsgkAZ9CTAsC-jQDBA')
+  != js('client-deps')
+  != js('shared-deps')
+  != js('pages/search')

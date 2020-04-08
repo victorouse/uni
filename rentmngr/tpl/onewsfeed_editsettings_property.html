@@ -1,0 +1,64 @@
+{include="header3"}
+<div class="container">
+	<h1>Edit notification settings</h1>
+	<p class="lead">{$property_details.address}, {$property_details.suburb}</p>
+    <p>Below are your current notification settings for this property: </p>
+    <form class="form-horizontal" id="editDetails" role="edit" method="POST" action="api/account.php">
+        <div class="form-group">
+					<label for="structural" class="col-xs-3 col-md-1 control-label">Structural</label>
+                    <div class="col-xs-9 col-md-11">
+                        <div class="form-inline">
+                            <input type="checkbox" name="notify[]" value="structural" id="structural" disabled="true" {if="$notify_structural"}checked{/if}></input>
+                        </div>
+                    </div>
+        </div>
+                <div class="form-group">
+					<label for="structural" class="col-xs-3 col-md-1 control-label">Plumbing</label>
+                    <div class="col-xs-9 col-md-11">
+                        <div class="form-inline">
+                            <input type="checkbox" name="notify[]" value="plumbing" id="plumbing" disabled="true" {if="$notify_plumbing"}checked{/if}></input>
+                        </div>
+                    </div>
+        </div>
+                <div class="form-group">
+					<label for="structural" class="col-xs-3 col-md-1 control-label">Security</label>
+                    <div class="col-xs-9 col-md-11">
+                        <div class="form-inline">
+                            <input type="checkbox" name="notify[]" value="security" id="security" disabled="true" {if="$notify_security"}checked{/if}></input>
+                        </div>
+                    </div>
+        </div>
+                <div class="form-group">
+					<label for="structural" class="col-xs-3 col-md-1 control-label">Electrical</label>
+                    <div class="col-xs-9 col-md-11">
+                        <div class="form-inline">
+                            <input type="checkbox" name="notify[]" value="electrical" id="electrical" disabled="true" {if="$notify_electrical"}checked{/if}></input>
+                        </div>
+                    </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-2">
+               
+                    <button id="edit" type="button" class="btn btn-primary">Edit</button>
+                    <button id="save" name="api" value="updateOwnerNotification" type="submit" class="btn btn-primary">Save</button>
+                
+            </div>
+        </div>
+    </form>
+	
+</div>
+{include="footer3"}
+
+<script>
+$("#save").hide();
+var edit  = document.getElementById('edit');
+var form = document.getElementById('editDetails');
+edit.addEventListener('click', function(){
+    for(var i=0; i < form.length; i++) {
+        form.elements[i].disabled = false;
+    } 
+    form.elements[0].focus(); // put focus on the first element
+    $("#edit").hide();
+    $("#save").show();
+});
+</script>

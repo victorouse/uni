@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+	
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    <link href="https://s3.amazonaws.com/jetstrap-site/lib/bootstrap/2.3.0/css/bootstrap.css" rel="stylesheet">
+    <link href="https://s3.amazonaws.com/jetstrap-site/lib/bootstrap/2.3.0/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" 
+		href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+
+	
+    <style>
+      
+      /* To push content below navbar */
+      @media (min-width: 980px) {
+        body {
+          margin-top: 41px;
+        }
+      }
+      
+    </style>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="https://s3.amazonaws.com/jetstrap-site/lib/bootstrap/2.2.1/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/ico/apple-touch-icon-57-precomposed.png">
+    
+  </head>
+  <body>
+
+<!-- Navigation bar for logged in user (collapsable) -->  
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="brand" href="#">WallFly</a>
+			<div class="nav-collapse collapse">
+				<ul class="nav">
+					<li class="active">
+						<a href="./">Home</a>
+					</li>
+					<li>
+						<a href="manage.php">Manage</a>
+					</li>
+					<li>
+						<a href="financial.php">Financial</a>
+					</li>
+					<li>
+						<a href="account.php">Account</a>
+					</li>
+					<li>
+						<a href="newsfeed.php">Newsfeed</a>
+					</li>
+				</ul>
+				<div class="btn btn-small pull-right" style="margin-top:7px;">
+					<a href="logout.php">Logout</a></div><div class="pull-right" style="padding:10px; color:white;">Logged in as {$user_name}
+					<span style="color:#0088cc;"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,50 @@
+{include="header3"}
+<div class="container">
+	<h1>Add New Post</h1>
+	<blockquote>Select from a list of properties you're related to and add a newsfeed post in the next step.</blockquote>
+	<form role="form">
+		<div class="form-group">
+			<div class="input-group">
+			<input type="text" class="form-control" placeholder="Search in address" id="searchfield">
+			<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+			</div>
+		</div>
+	</form>
+	<label>Selected Property</label>
+	<form action="addItem.php" method="GET">
+	<div class="radio" id="selected_property">
+		
+	</div>
+	<input type="submit" class="btn btn-success" value="New Post">
+	</form>
+	<hr>
+	{loop="properties"}
+	<div class="radio" address="{$value.address}">
+				<label>
+					<input type="radio" class="option_radio" name="temp_property_id" value="{$value.property_id}">
+					{$value.address} <a href="view.php?property={$value.property_id}"><span class="glyphicon glyphicon-search"></span></a>
+				</label>
+	</div>
+	{/loop}
+	
+	
+</div>
+{include="footer3"}
+<script src="js/quikFilter.js">
+</script>
+<script>
+$(function(){
+	function abc(){
+		$("#selected_property").html($(this).closest("div").html());
+		$("#selected_property").find(".option_radio").attr('name', "property_id");
+		$("#selected_property").find(".option_radio").attr('checked', true);
+	
+	}
+	$("#searchfield").on("keyup", {search:"address"}, quikFilter);
+	$("input[type=radio].option_radio").on("change", abc);
+	$("input[type=radio].option_radio:first").trigger("change");
+
+
+
+});
+</script>

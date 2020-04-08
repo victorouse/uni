@@ -1,0 +1,44 @@
+{include="header3"}
+    		<div class="container">
+    			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+    				<span class="icon-bar"></span>
+    				<span class="icon-bar"></span>
+    				<span class="icon-bar"></span>
+    			</button>
+    			<a class="brand" href="#">WallFly</a>
+    			<div class="nav-collapse collapse">
+    				<ul class="nav">
+    					<li class="active">
+    						<a href="#">Home</a>
+    					</li>
+    					<li>
+    						<a href="#">Pricing</a>
+    					</li>
+						<li>
+    						<a href="#">Contact</a>
+    					</li>
+    				</ul>
+					
+					
+						</div>
+				</div>
+    		</div>
+    	</div>
+    </div>
+	
+    <div class="container">
+		<br />
+		<!-- Check if account was created successfully, notify the user if it was or wasn't -->
+        {if="$acctSuccess==2"}
+			<div class="alert alert-error">
+              <strong>Error!</strong> Something went wrong trying to create your account. Please contact support <ADD LINK TO SUPPORT>.
+            </div>
+		{else}
+			<div class="alert alert-success">
+              <strong>Account created successfully.</strong> You can now log in using your email and password ADD LINK TO LOGIN PAGE AFTER BS3 MERGE.
+            </div>
+		{/if}
+    </div>
+	
+    <!-- /container -->
+	{include="footer3"}

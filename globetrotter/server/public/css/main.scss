@@ -1,0 +1,298 @@
+// An opinionated styleguide for writing sane, maintainable and scalable Sass.
+// http://sass-guidelin.es
+
+@import "themes/flatly/variables";
+
+@import "vendors/bootstrap";
+@import "vendors/bootstrap-social";
+@import "vendors/font-awesome";
+@import "vendors/ionicons";
+@import "vendors/videojs";
+@import "pages/landing";
+
+
+@import "themes/flatly/styles";
+
+// Scaffolding
+// -------------------------
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  padding-top: 60px;
+  margin-bottom: 75px;
+  -webkit-font-smoothing: antialiased;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  line-height: 45px;
+}
+
+// Navbar
+// -------------------------
+
+.navbar-nav img {
+  width: 30px;
+  height: 30px;
+  margin: -15px 15px -15px;
+}
+
+// Alerts
+// -------------------------
+
+.alert {
+  margin-top: 20px;
+}
+
+// Thumbnails
+// -------------------------
+
+.thumbnail {
+  padding: 0;
+  border-radius: 0;
+  box-shadow: 0 0 5px #ccc, inset 0 0 0 #000;
+}
+
+// Font Icons
+// -------------------------
+
+.fa,
+[class^="ion-"] {
+  margin-right: 5px;
+}
+
+// Home page
+// -------------------------
+.heading-text {
+  font-size: 30px;
+  font-weight: 100;
+  text-align: center;
+}
+
+.recommended {
+  ul {
+      margin: 0 auto;
+      margin-left: 10px;
+      text-align: left;
+      padding: 0;
+  }
+
+  li {
+      display: inline-block;
+      padding-right: 5px;
+      padding-bottom: 5px;
+      vertical-align: top;
+  }
+}
+
+.video-thumbnail {
+  width: 150px;
+  height: 150px;
+}
+
+.map > div > div {
+  height: 300px;
+  width: 100%;
+}
+
+// Search page
+// -------------------------
+
+#greeting {
+
+  text-align: center;
+
+  h1 {
+    font-weight: 100;
+    padding-top: 30px;
+    padding-bottom: 10px;
+  }
+
+  .fa-globe {
+    margin-right: 10px;
+  }
+}
+
+.search-bar {
+  .form-group {
+    margin-bottom: 0;
+  }
+}
+
+.panel-title a:hover {
+  text-decoration: none;
+}
+
+.panel-title a:focus {
+  text-decoration: none;
+}
+
+.map-canvas img {
+  max-width: none;
+}
+
+.table-striped > tbody > tr:nth-child(odd) {
+  background-color: #F5FAFF
+}
+
+.search-result {
+  hr {
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+
+  height: 150px;
+
+  .title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 0;
+    cursor: pointer;
+    color: $brand-primary;
+  }
+
+  .uploaded {
+    font-size: 12px;
+  }
+
+  .url_cover {
+    height: 150px;
+    width: 150px;
+  }
+}
+
+.tab-content {
+  padding: 20px;
+}
+
+.panel-collapse {
+  height: 100%;
+}
+
+.btn-tool {
+  margin-bottom: 20px;
+  margin-right: 10px;
+}
+
+.fa {
+  padding-left: 5px;
+}
+
+// Video rating
+// -------------------------
+
+.description {
+  text-align: justify;
+}
+
+.text-rating {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.save-button {
+  float: right;
+
+  .is-saved {
+    color: red !important;
+  }
+
+  .fa-heart {
+    color: #ccc;
+    margin-left: 5px;
+  }
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+
+$star-rating-link: #ccc !default;
+$star-rating-hover: #CD0000 !default;
+$star-rating-active: #F9F64F !default;
+
+.star-rating {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    text-align: left;
+    display: inline-block;
+    margin-left: 5px;
+
+    a {
+        cursor: pointer;
+        color: $star-rating-link;
+        text-decoration: none;
+
+        &:hover {
+            color: $star-rating-hover;
+            ~ a {
+                color: $star-rating-hover;
+            }
+        }
+
+        &.is-active {
+            color: $star-rating-active !important;
+            ~ a {
+                color: $star-rating-active;
+            }
+        }
+
+        &.is-disabled {
+            color: $star-rating-link !important;
+            cursor: not-allowed;
+        }
+    }
+}
+
+// Overrides
+// -------------------------
+
+.page-header {
+  margin-bottom: 0 !important;
+}
+
+.checkbox {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 11px;
+}
+
+#search-main {
+  .modal-backdrop {
+    height: 100%;
+  }
+
+  .modal-dialog {
+    height: 100%;
+  }
+
+  .modal-body {
+    max-height: 550px;
+    overflow-y: scroll;
+
+  }
+
+  .modal-footer {
+    .fa-link {
+      padding-left: 5px;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+  }
+
+}

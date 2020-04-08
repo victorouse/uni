@@ -1,0 +1,96 @@
+{include="header3"}
+ <div class="container">
+		<h1>Property Financials by Suburb</h1>
+		<blockquote>
+			You can quickly see the payments that are pending requiring approval of receipt. Use the search tools to select a property to enter a detailed financial view for that property.
+		</blockquote>
+		<hr>
+		<div class="row">
+			<div class="col-md-9" style="margin-top:10px">
+					<form role="form">
+						<div class="form-group">
+							<div class="input-group">
+							<input type="text" class="form-control" placeholder="Search in suburb" id="searchfield">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+							</div>
+						</div>
+					</form>
+			</div>
+			<div class="col-md-3" style="margin-top:10px">
+			<form role="form">
+				<a data-toggle="tooltip" title="View overall list" class="btn btn-primary has_tooltip" href="financial.php"><span class="glyphicon glyphicon-globe"></span> Overall View</a>
+				<a data-toggle="tooltip" title="Add new property" class="btn btn-success has_tooltip" href="addProperty.php"><span class="glyphicon glyphicon-plus"></span> Add Property</a>
+			</form>
+			</div>
+		</div>
+		<hr>
+		{loop="results"}
+		<div class="row" suburb="{$key}">
+		<div class="suburb container">
+		<div style="visibility:hidden">
+			{$items = 0}
+			{loop="value"}{if="$value.financial_issues>0"}{$items += 1}{/if} {/loop} </div>
+			<h5 class="suburb-collapse" data-toggle="collapse" href="#collapse{$counter}">{$key} <span class="badge badge-danger">{$value|count}</span>
+			
+			{if="$items >0"}<span class="label label-danger">!</span>{/if} </h5>
+		
+		<div id="collapse{$counter}" class="container collapse collapse-in" >
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<td>
+						<b>Pending Payments <i class="icon-arrow-down"></i></b>
+					</td>
+					<td>
+						<b>Address</b>
+					</td>
+					<td class="hidden-xs hidden-sm">
+						<b>Tenant</b>
+					</td>
+					<td class="hidden-xs hidden-sm">
+						<b>Owner</b>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				{loop="value"}
+							<tr>
+					<td><a class="btn btn-{if="$value.financial_issues>0"}danger{else}success{/if}" href="newsfeed.php?property={$value.property_id}">
+						<i class="icon-flag icon-white"></i>{$value.financial_issues}</a></td>
+					<td><a href="property_financials.php?property={$value.property_id}">{$value.address}</a></td>
+					<td class="hidden-xs hidden-sm">{if="ISSET($value.tenant_id)"}
+							<a href="view.php?user={$value.tenant_id}">{$value.tenant_name}</a>
+						{else} 
+							<a class="btn btn-primary"><i class="icon-plus icon-white"></i> Add Tenant</a>
+						{/if}</td>
+					<td class="hidden-xs hidden-sm">{if="ISSET($value.owner_id)"}
+							<a href="view.php?user={$value.owner_id}">{$value.owner_name}</a>
+						{else}
+							<a class="btn btn-primary"><i class="icon-plus icon-white"></i> Add Owner</a>
+						{/if}
+						</td>
+				</tr>
+				{/loop}
+			</tbody>
+		</table>
+		</div>
+</div>
+<hr>
+	</div>
+	
+{/loop}
+</div>
+
+{include="footer3"}
+<script src="js/quikFilter.js">
+</script>
+<script>
+$(function(){
+	$("#searchfield").on("keyup", {search:"suburb"}, quikFilter);
+	$(".has_tooltip").tooltip();
+
+	$(".container .suburb").on("mouseup", function(){
+			$(this).find(".suburb-collapse").trigger('click');
+		});	
+});
+</script>

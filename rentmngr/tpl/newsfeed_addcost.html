@@ -1,0 +1,34 @@
+{include="header3"}
+<div class="container">
+	<h1>Add New Cost</h1>
+	<p class="lead">{$property_details.address}, {$property_details.suburb}</p>
+	
+	<div class="tab-content">
+		<!-- Issue Item Form -->
+		
+			<div class="container">
+			<br>
+			<form id="issue" class="form-horizontal" method="post" action="api/newsfeed.php">
+			<blockquote>Use this form to add a new cost. Try to best describe the issue and state the cost.</blockquote>
+
+			
+			<label>Issue Cost:</label>
+			<input type="number" class="form-control" id="cost" name="cost">
+			<br>
+			<label>Describe the issue:</label>
+			<textarea name="description" class="form-control"></textarea>
+			<br>
+			
+			<!-- Hidden, required fields -->
+			<input type="hidden" name="item_id" value="{$item_id}">
+			<input type="hidden" name="tenancy_id" value="{$tenancy_id}">
+			<!-- End hidden fields -->
+			<button type="submit" name="api" value="addCost"
+			class="btn btn-success" >Add Cost</button>&nbsp;<a class="btn btn-danger" href="newsfeed.php">Cancel</a>
+			</form>
+			</div>
+		
+	</div>
+</div>
+{include="footer3"}
+

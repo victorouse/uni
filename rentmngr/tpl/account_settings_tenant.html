@@ -1,0 +1,161 @@
+{include="header3"}
+<div class="container">
+<h1>Account Settings </h1>
+<blockquote>Here are all your account settings for use in {$website_name}</blockquote>
+<form class="form-horizontal" id="editDetails" role="edit" method="POST" action="api/account.php">
+    <div class="form-group">
+        <label for="fname" class="col-xs-2 control-label">First Name</label>
+        <div class="col-xs-10">
+            <div class="form-inline">
+                <input name="fname" type="text" class="form-control" value="{$first_name}" disabled="true">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="lname" class="col-xs-2 control-label">Last Name</label>
+        <div class="col-xs-10">
+            <div class="form-inline">
+                <input name="lname" type="text" class="form-control" value="{$last_name}" disabled="true">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email" class="col-xs-2 control-label">Email</label>
+        <div class="col-xs-10">
+            <div class="form-inline">
+                <input name="email" type="text" class="form-control" value="{$email}" disabled="true">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-2">
+           
+                <button id="edit" type="button" class="btn btn-primary">Edit</button>
+                <button id="save" name="api" value="update" type="submit" class="btn btn-primary">Save</button>
+            
+        </div>
+    </div>
+</form>
+<hr />
+
+<h2>Credit Cards</h2>
+<blockquote>Credit cards are used in WallFly to schedule automatic rent payments. Removing a card will remove scheduled payments attached to that card. </blockquote>
+{if="$card_details==null"}
+	{if="$removed"}
+		<div class="alert alert-success"><span class="glyphicon glyphicon-remove-circle"></span> Card successfully removed</div>
+	{/if}
+<a class='btn btn-primary' href="addCard.php">Add new card </a>
+{else}
+	{if="$add"}
+		<div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span> Card successfully added</div>
+	{/if}
+	<table class="table table-striped">
+		<thead>
+			<th>Card Number</th>
+			<th>Options</th>
+		</thead>
+        <tbody>
+		<tr>
+			<td>
+			<p><span class="glyphicon glyphicon-credit-card"></span> {$card_details["display_number"]}</p>
+			</td>
+			<td>
+				<form action="api/pin.php" method="POST">
+                    <input type="hidden" name="api" value="removeCard">
+					<input type="submit" class="btn btn-danger" value="Remove Card">
+				</form>
+            </td>
+		</tr>
+        </tbody>
+    </table>
+
+{/if}
+<hr>
+<!-- Automatic payments stuff -->
+<h2>Automatic Payments</h2>
+<blockquote>{$website_name} allows you to automatically pay your rent on time with a credit card. Every night, payments that have been scheduled for this day are processed and sent to your agent. You can add a payment schedule from the property financial screen.
+</blockquote>
+    <p>
+        <table class="table table-striped">
+        <thead>
+            <tr>
+                <td><b>Action</b></td>
+                <td>
+                    <b>Day of fortnight</b>
+                </td>
+                <td>
+                    <b>Card Number</b>
+                </td>
+                <td>
+                    <b>Amount in cents</b>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            {loop="schedules"}
+            <tr>
+                <td>
+                        <form class="form" action="api/recurring.php" method="POST">
+                            <a class="btn btn-primary" href="editPayment.php?payment_id={$value.recurring_payment_id}">
+                                <span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                            <input type="hidden" name="api" value="remove">
+                            <input type="hidden" name="payment_id" value="{$value.recurring_payment_id}">
+                            <input type="hidden" name="property_id" value="{$property_id}">
+                            <a id="cancel{$value.recurring_payment_id}" class="btn btn-default hidden-btn"><span class="glyphicon glyphicon-stop"></span> Cancel</a>
+                            <a class="btn btn-danger remove-btn" confirm=0 value="{$value.recurring_payment_id}"><span class="glyphicon glyphicon-remove"></span> Remove</a>
+                        </form>
+                    </td>
+                <td>
+                    {$value.day}
+                </td>
+                <td>
+                    {$value.display_number}
+                </td>
+                <td>
+                    {$value.amount}
+                </td>
+            </tr>
+            {/loop}
+        </tbody>
+        </table>
+    </p>
+    </div>
+</div>
+
+</div>
+
+{include="footer3"}
+
+<script>
+$("#save").hide();
+var edit  = document.getElementById('edit');
+var form = document.getElementById('editDetails');
+edit.addEventListener('click', function(){
+    for(var i=0; i < form.length; i++) {
+        form.elements[i].disabled = false;
+    } 
+    form.elements[0].focus(); // put focus on the first element
+    $("#edit").hide();
+    $("#save").show();
+});
+</script>
+
+<script>
+$(function(){
+    $(".remove-btn").click(function(){
+        var confirmed = $(this).attr("confirm");
+        if(confirmed==0){
+            var num = $(this).attr("value");
+            $("#cancel"+num).show();
+            $(this).attr("confirm", 1);
+        }else{
+            $(this).parent("form").submit();
+        }
+    });
+    $(".hidden-btn").click(function(){
+        $(this).hide();
+        $(this).next(".remove-btn").attr("confirm", 0);
+    });
+    $(".hidden-btn").hide();
+});
+</script>

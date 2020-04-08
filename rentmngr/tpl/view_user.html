@@ -1,0 +1,16 @@
+{include="header3"}
+	<div class="container">
+		<h1>User Details</h1>
+		<blockquote>
+			From here you can view the selected users details and contact them via email.
+		</blockquote>
+		<p>
+			<!-- Display user info -->
+			<address>
+				<strong>Name</strong>: {$details.first_name} {$details.last_name}<br>
+				<strong>User Type</strong>: {$details.type}<br>
+				<strong>Email Address</strong>: <a href="mailto:{$details.email_address}">{$details.email_address}</a>
+			</address>
+		</p>
+	</div>
+{include="footer3"}

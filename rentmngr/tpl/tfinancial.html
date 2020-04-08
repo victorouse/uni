@@ -1,0 +1,122 @@
+
+	<body>
+	<div class="container" style="padding-top:20px;">
+		<h1>{$address}</h1>
+		<a class="btn btn-primary" href="newsfeed.php?property=
+			{$results['property_id']}">Newsfeed</a> <a class="btn btn-primary" 
+			href="view.php?property={$results['property_id']}">
+			Property Information</a>
+		<hr>
+		
+		<!-- Pull information and present as collapsable items -->
+		<div class="accordion" id="accordion">
+			
+			<div class="accordion-group">
+				<!--Owner Details-->
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" 
+						data-parent="#accordion" href="#collapseTwo">
+						<h3>Rent Financials</h3>
+					</a>
+				</div>
+				<div id="collapseTwo" class="accordion-body collapse in">
+					<div class="accordion-inner">
+					
+				{if="$rent"}
+						<table class="table table-striped">
+			
+			<thead>
+				<tr>
+					<td>
+						<b>Tenant Name</b>
+					</td>
+					<td>
+						<b>Amount</b>
+					</td>
+					<td>
+						<b>Date</b>
+					</td>
+					<td>
+						<b>Type</b>
+					</td>
+					<td>
+						<b>Comment</b>
+					</td>
+				</tr>
+			</thead>
+			
+			<tbody>
+				{loop="rent"}
+				<tr>
+					<td>{$value.name}</td>
+					<td>${$value.amount}</td>
+					<td>{$value.datetime}</td>
+					<td>{$value.type}</td>
+					<td>{$value.comment}</td>
+				</tr>
+				{/loop}
+			</tbody>
+
+		</table>
+		{else}
+			No rent.
+		{/if}
+					</div>
+				</div>
+			</div>
+			
+			<div class="accordion-group">
+				<!--Property Details-->
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" 
+						data-parent="#accordion" href="#collapseThree">
+						<h3>Maintenance Financials</h3>
+					</a>
+				</div>
+				<div id="collapseThree" class="accordion-body collapse in">
+					<div class="accordion-inner">
+						{if="$maintenance"}
+						<table class="table table-striped">
+			
+			<thead>
+				<tr>
+					<td>
+						<b>Tenant Name</b>
+					</td>
+					<td>
+						<b>Amount</b>
+					</td>
+					<td>
+						<b>Date</b>
+					</td>
+					<td>
+						<b>Type</b>
+					</td>
+					<td>
+						<b>Comment</b>
+					</td>
+				</tr>
+			</thead>
+			
+			<tbody>
+				{loop="maintenance"}
+				<tr>
+					<td>{$value.name}</td>
+					<td>${$value.amount}</td>
+					<td>{$value.approved_datetime}</td>
+					<td>{$value.issue_category}</td>
+					<td>{$value.comment}</td>
+				</tr>
+				{/loop}
+			</tbody>
+
+		</table>
+		{else}
+			No maintenance.
+		{/if}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+

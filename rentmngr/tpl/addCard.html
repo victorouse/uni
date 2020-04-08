@@ -1,0 +1,164 @@
+{include="header3"}
+ <div class="container">
+		<form action='api/pin.php' class='pin' method='post'>
+  <div class='errors' style='display:none'>
+    <h3></h3>
+    <ul></ul>
+  </div>
+  	<div class="row">
+	  <div class="col-md-6">
+  <fieldset>
+    <legend>Payment</legend>
+    <!--
+      The lack of 'name' attributes on these inputs prevents
+      the browser from submitting them to your server
+    -->
+	
+	<div class="form-group col-md-12">
+	<label for='cc-number' class="col-md-12">Credit Card Number</label>
+    <input id='cc-number' type='text' class="form-inline form-control col-md-12" />
+    <label for='cc-name' class="col-md-12">Name on Card</label>
+	<input id='cc-name' type='text' class="form-inline form-control col-md-12" />
+
+	
+	
+    
+    <label for='cc-expiry-month' class="col-md-12">Expiry Month</label>
+    <input id='cc-expiry-month' class="form-inline form-control col-md-12"/>
+    <label for='cc-expiry-year' class="col-md-12">Expiry Year</label>
+	<input id='cc-expiry-year' class="form-inline form-control col-md-12"/>
+	
+	
+
+    
+    <label for='cc-cvc' class="col-md-12">CVC</label>
+    <input id='cc-cvc' class="form-inline form-control col-md-12"/>
+
+	</div>
+	  </fieldset>
+ 
+	</div>
+	<div class="col-md-6">
+  <fieldset>
+    <legend>Billing</legend>
+    <!--
+      The lack of 'name' attributes on these inputs prevents
+      the browser from submitting them to your server
+    -->
+
+	
+	<div class="form-group col-md-12">
+    <label for='address-line1' class="col-md-12 control-label">Address 1</label>
+    <input id='address-line1' class="form-inline form-control col-md-12" />
+	<label for='address-line2' class="col-md-12 control-label">Address 2</label>
+    <input id='address-line2' class="form-inline form-control col-md-12"/>
+
+	
+   
+	<label for='address-city' class="col-md-12 control-label">City</label>
+    <input id='address-city'  class="form-inline form-control col-md-12"/>
+    <label for='address-postcode' class="col-md-12 control-label">Postcode</label>
+    <input id='address-postcode' class="form-inline form-control col-md-12"/>
+   
+	
+
+	<label for='address-state' class="col-md-12">State</label>
+    <input id='address-state' class="form-inline form-control col-md-12"/>
+    <label for='address-country' class="col-md-12">Country</label>
+    <input id='address-country' class="form-inline form-control col-md-12"/>
+		 <input type='submit' class="btn btn-success pull-right" style="margin-top:10px" value='Save' />
+  <input type='hidden' name='api' value='addCard' />
+	</div>
+	</div>
+	
+  </fieldset>
+
+
+  </div>
+</form>
+</div>
+{include="footer3"}
+<script src='https://test-api.pin.net.au/pin.js'></script>
+<script>
+
+$(function() {
+
+  // Firstly, set the publishable key
+  //
+  // This can either be your live publishable key or test publishable key, depending
+  // on which script you included above
+
+  Pin.setPublishableKey('pk_GtKWk6135vdsQTG9QevLuQ');
+
+  // Now we can call Pin.js on form submission to retrieve a card token and submit
+  // it to the server
+
+  var $form = $('form.pin'),
+      $submitButton = $form.find(":submit"),
+      $errors = $form.find('.errors');
+
+  $form.submit(function(e) {
+
+    e.preventDefault();
+    $errors.hide();
+
+    // Disable the submit button to prevent multiple clicks
+    $submitButton.attr({disabled: true});
+
+    // Fetch details required for the createToken call to Pin
+    var card = {
+      number: $('#cc-number').val(),
+      name: $('#cc-name').val(),
+      expiry_month: $('#cc-expiry-month').val(),
+      expiry_year: $('#cc-expiry-year').val(),
+      cvc: $('#cc-cvc').val(),
+      address_line1: $('#address-line1').val(),
+      address_line2: $('#address-line2').val(),
+      address_city: $('#address-city').val(),
+      address_state: $('#address-state').val(),
+      address_postcode: $('#address-postcode').val(),
+      address_country: $('#address-country').val()
+    };
+
+    // Request a token for the card from Pin
+    Pin.createToken(card, handlePinResponse);
+  });
+
+  function handlePinResponse(response) {
+    var $form = $('form.pin');
+
+    if (response.response) {
+      // Add the card token and ip address of the customer to the form
+      // You will need to post these to Pin when creating the charge.
+      $('<input>')
+        .attr({type: 'hidden', name: 'card_token'})
+        .val(response.response.token)
+        .appendTo($form);
+      $('<input>')
+        .attr({type: 'hidden', name: 'ip_address'})
+        .val(response.ip_address)
+        .appendTo($form);
+
+      // Resubmit the form
+      $form.get(0).submit();
+
+    } else {
+      var $errorList = $errors.find('ul');
+
+      $errors.find('h3').text(response.error_description);
+      $errorList.empty();
+
+      if (response.messages) {
+        $.each(response.messages, function(index, errorMessage) {
+          $('<li>')
+            .text(errorMessage.param + ": " + errorMessage.message)
+            .appendTo($errorList);
+        });
+      }
+
+      $errors.show();
+      $submitButton.removeAttr('disabled');
+    }
+  };
+});
+</script>

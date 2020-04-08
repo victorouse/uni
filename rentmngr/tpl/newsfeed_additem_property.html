@@ -1,0 +1,79 @@
+{include="header3"}
+<div class="container">
+	<h1>Add New Post</h1>
+	<p class="lead">{$property_details.address}, {$property_details.suburb}</p>
+	<ul class="nav nav-tabs">
+	<li class="active"><a href="#issue" data-toggle="tab">Issue</a></li>
+	<li><a href="#inspection" data-toggle="tab">Inspection</a></li>
+	</ul>
+	<div class="tab-content">
+		<!-- Issue Item Form -->
+		<div class="tab-pane active" id="issue">
+			<div class="container">
+			<br>
+			<form id="issue" class="form-horizontal" method="post" action="api/newsfeed.php">
+			<blockquote>Use this form to add a new issue log. Try to best classify the issue and briefly describe the problem.</blockquote>
+
+			
+			<label>Issue Category:</label>
+			<div class="radio">
+				<label><input type="radio" name="cat" value="plumbing">Plumbing</label></input>
+			</div>
+			<div class="radio">
+					<label><input type="radio" name="cat" value="electrical">Electrical</label></input>
+			</div>
+			<div class="radio">
+				<label><input type="radio" name="cat" value="structural">Structural</label></input>
+			</div>
+			<div class="radio">
+				<label><input type="radio" name="cat" value="security">Security</label></input>
+			</div>
+			<br>
+			<label>Describe the issue:</label>
+			<textarea name="description" class="form-control"></textarea>
+			<br>
+			
+			<!-- Hidden, required fields -->
+			<input type="hidden" name="property_id" value="{$property_id}">
+			<input type="hidden" name="type" value="issue">
+			<input type="hidden" name="user_id" value="{$user_id}">
+			<!-- End hidden fields -->
+			<button type="submit" name="api" value="addItem"
+			class="btn btn-success" >Add Issue</button>&nbsp;<a class="btn btn-danger" href="newsfeed.php?property={$property_id}">Cancel</a>
+			</form>
+			</div>
+		</div>
+
+		<!-- Inspection Item Form -->
+		<div class="tab-pane" id="inspection">
+			<div class="container">
+			<br>
+			<blockquote>Suggest a date and time for an inspection to take place and finalise in comments with the tenant.</blockquote>
+			<form id="issue" class="form-horizontal" method="post" action="api/newsfeed.php">
+			<!-- Add new comment form -->
+			<label>Message:</label>
+			<textarea name="description" class="form-control"></textarea>
+			<br>
+			<!-- Hidden, required fields -->
+			<input type="hidden" name="property_id" value="{$property_id}">
+			<input type="hidden" name="type" value="inspection">
+			<input type="hidden" name="user_id" value="{$user_id}">
+			<!-- End hidden fields -->
+			<button type="submit" name="api" value="addItem"
+			class="btn btn-success" >Add Issue</button>&nbsp;<a class="btn btn-danger" href="newsfeed.php?property={$property_id}">Cancel</a>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+{include="footer3"}
+<script src="js/quikFilter.js">
+</script>
+<script>
+$(function(){
+
+
+
+
+});
+</script>

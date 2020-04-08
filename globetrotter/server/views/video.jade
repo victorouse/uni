@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  .col-lg-8.col-lg-offset-2
+    #video-main
+      != markup
+    script#initial-state(type='application/json') !{JSON.stringify(state)}
+
+block append scripts
+    != js('client-deps')
+    != js('shared-deps')
+    != js('pages/video')

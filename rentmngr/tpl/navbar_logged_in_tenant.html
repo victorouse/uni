@@ -1,0 +1,38 @@
+<!-- Tenant navbar, collapsible if used on a mobile device -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="./"><span class="nav-black-text">rentmn.</span><span class="gr">gr</span></a>
+	</div>
+	<div class="collapse navbar-collapse">
+		<ul class="nav navbar-nav nav-blue-text">
+			<li>
+				<a href="./">Home</a>
+			</li>
+			<li>
+				<a href="newsfeed.php">Newsfeed</a>
+			</li>
+			<li>
+				<a href="manage.php">Property</a>
+			</li>
+			<li>
+				<a href="financial.php">Financial</a>
+			</li>
+			<li>
+				<a href="account.php">Account</a>
+			</li>
+		</ul>
+		<!-- Form to handle logging out -->
+		<form class="navbar-form navbar-right" method="POST" role="logout" action="api/account.php">
+			<button type="submit" name="api" value="logout" class="btn btn-default">Logout</button>
+		</form>
+		<ul class="nav navbar-nav navbar-right nav-blue-text">
+			<li><a href="account.php">Logged in as {$user_name}</a></li>
+		</ul>
+	</div>
+</nav>

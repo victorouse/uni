@@ -1,0 +1,103 @@
+{include="header3"}
+	<!-- Show a 70ish % container on laptop & desktop -->
+	<div id="leadimg" class="hidden-xs hidden-sm carousel-inner" style="margin-top:-40px;">
+		<div class="item active">
+			<img src="img/ipad.jpg" alt="placeholder1">
+			<div class="carousel-caption" style="margin-bottom:-20px;">
+				<h1 class="lead">
+					{$website_name} is a cloud-based rental property management application<br>
+					<strong>Try the demo and register your interest <a class="cta-link" href="#cta">below</a>!</strong>
+				</h1>
+				<a href="demo.php?type=agent" class="btn btn-success">Agent Demo</a>
+				<a href="demo.php?type=owner" class="btn btn-warning">Owner Demo</a>
+				<a href="demo.php?type=tenant" class="btn btn-danger">Tenant Demo</a>
+			</div>
+		</div>
+	</div>
+    <div class="container">
+		<!-- Show a full width container on mobiles -->
+		<div class="hidden-md hidden-lg">
+			<img src="img/logo_notagline.png" class="img-responsive" alt="placeholder1">
+		</div>
+		<div class="text-center hidden-md hidden-lg">
+			<h1 class="lead ">
+				{$website_name} is a cloud-based rental property management application<br>
+				<strong>Try the demo and register your interest <a class="cta-link" href="#cta">below</a>!</strong>
+			</h1>
+			<a href="demo.php?type=agent" class="btn btn-success">Agent Demo</a>
+			<a href="demo.php?type=owner" class="btn btn-warning">Owner Demo</a>
+			<a href="demo.php?type=tenant" class="btn btn-danger">Tenant Demo</a>
+		</div>
+		<hr class="hidden-md hidden-lg">
+		<br class="hidden-xs hidden-sm">
+		<br class="hidden-xs hidden-sm">
+	</div>
+    <!-- Property Management -->
+	<div class="container">
+		<img class="img-responsive img-circle marketing-thumbs pull-right" src="img/house_logo.png">
+		<h3 class="brand-text">Manage maintenance and inspections from any of your devices, anywhere.</h3>
+		<p class="lead">
+			{$website_name_first_caps} allows you to manage your rental properties from anywhere on the world. You can use {$website_name} to aggregate all news about your properties at any time. Arrange inspections and liaise with tenants and owners to undertake maintenance through {$website_name} to allow transparent communications. 
+		</p>
+	</div>
+	<hr>	
+	<!-- Financial Management -->
+	<div class="container">
+		<img class="img-responsive img-circle marketing-thumbs pull-left" src="img/dollar_sign_logo.png">
+		<h3 class="brand-text">Simplified financial management</h3>
+		<p class="lead">
+			Save time and money by using {$website_name} to manage rent payments, maintenance costs and other charges. Let your property owners see
+			this information at any time with their own secure login. Tenants have the option to pay their rent online, securely right from {$website_name}. Rather than chasing up tenants for overdue rent, let {$website_name} automate the rent payments and automatically add it
+			to the property's financial records.
+		</p>	
+	</div>
+	<hr>
+	<!-- Relationships -->
+	<div class="container">
+		<img class="img-responsive img-circle marketing-thumbs pull-right" src="img/person_logo.png">
+		<h3 class="brand-text">Improved relationships with owners and tenants</h3>
+		<p class="lead">
+			Keep your tenants in the loop regarding inspections and let them know the latest news about their maintenance issues.
+			Owners can always retrieve the latest info
+			{$website_name_first_caps} centralises this information to save the excessive phone calls for minor questions.
+		</p>
+	</div>
+	<br>
+	<!-- Call to action -->
+	<div id="cta" class="jumbotron call-to-action">
+		<div class="container">
+			<h3 class="brand-text">Stay updated with Rentmn.gr progess</h3>
+			<p class="lead">
+				{$website_name_first_caps} is still in a closed-beta, but if you would like to stay updated with the progress or would like
+				to be part of the closed-beta, please register below.
+			</p>
+			<form action="interest.php" method="POST">
+				<div class="input-group">
+					<input type="email" name="email_address" class="form-control" placeholder="email@example.com">
+					<span class="input-group-btn">
+						<input type="submit" class="btn btn-success" value="Register">
+					</span>
+				</div>
+			</form>	
+		</div>
+		<br>
+		<div class="container text-center">
+			<p class="lead"> &copy; rentmn.gr 2013 - <a href="guide.php">User Guide</a></p>
+		</div>
+	</div>
+<!-- /container -->
+{include="marketing_footer"}
+<script>
+	$().ready(function(){
+		if($("#leadimg").css("display") != 'none' ){
+			var target_offset = $("#leadimg").offset();
+			var offset_top = target_offset.top;
+			$('html, body').animate({scrollTop:offset_top}, 500);
+		}
+
+		$(".cta-link").click(function() {
+			var target_offset = $("#cta").offset().top;
+			$('html, body').animate({scrollTop:target_offset}, 400);
+		});
+	});
+</script>

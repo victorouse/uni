@@ -1,0 +1,56 @@
+{loop="items"}
+<br>
+		<div class = "row" >
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+ 
+			  <div class = "col-md-12">
+						<!-- Now do special stuff if it's an issue -->
+						{if="$value.type == 'issue'"}
+							<h4>{if="$value.issue_category=='electrical'"}Electrical
+								{elseif="$value.issue_category=='structural'"}Structural
+								{elseif="$value.issue_category=='security'"}Security
+								{elseif="$value.issue_category=='plumbing'"}Plumbing
+								{/if} Issue
+																
+						
+						{if="$value.escalated == '1'"} 
+						<div class="label label-warning pull-right">Item Escalated</div>
+						{/if}
+						
+						</h4>
+					
+						{/if}
+
+						<!-- Now do special stuff if it's an inspection -->
+						{if="$value.type == 'inspection'"}
+							<h4>Inspection Requested</h4>
+						{/if}
+	
+			</div>
+        </a>
+      </h4>
+    </div>
+	
+	
+
+      <div class="panel-body">
+			
+		
+				<!-- larger span to contain extra information -->
+			<div class = "col-md-12">
+
+					<!-- Add buttons and description of item -->
+
+						 {$value.description}
+
+					<!-- Make collapsable subitems-->
+					
+			</div>
+      </div>
+    </div>
+  </div>
+
+			
+	{/loop}

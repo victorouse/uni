@@ -1,0 +1,41 @@
+{
+  "name": "virtual-tourist-elastic",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/victorouse/virtual-tourist-elastic.git"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "bcrypt-nodejs": "^0.0.3",
+    "body-parser": "^1.11.0",
+    "cookie-parser": "^1.3.3",
+    "cors": "^2.6.0",
+    "elastic.js": "^1.2.0",
+    "elastic.js-update": "^1.1.1",
+    "elasticsearch": "^4.1.0",
+    "errorhandler": "^1.3.3",
+    "esq": "0.0.12",
+    "express": "^4.11.2",
+    "lodash": "^3.2.0",
+    "lusca": "^1.0.2",
+    "method-override": "^2.3.1",
+    "morgan": "^1.5.1",
+    "qs": "^2.3.3",
+    "request": "^2.53.0"
+  },
+  "devDependencies": {
+    "blessed": "^0.0.47",
+    "chai": "^2.0.0",
+    "mocha": "^2.1.0",
+    "multiline": "^1.0.2",
+    "supertest": "^0.15.0"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}

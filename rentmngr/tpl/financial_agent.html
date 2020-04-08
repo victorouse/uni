@@ -1,0 +1,188 @@
+{include="header3"}
+	<div class="container">
+		<!-- Displays general info -->
+		<div class="row text-center">
+			<div class="col-md-4 click_div">
+				<h1 id="address">{$address}</h1>
+				<a class="btn btn-primary" href="newsfeed.php?property={$results['property_id']}">Newsfeed</a> <a class="btn btn-primary" href="view.php?property={$results['property_id']}">
+				Property Information</a>
+			</div>
+			<div class="col-md-4 click_div">
+				<a href="property_financials.php?property=1">
+					<h1>
+						<span class="glyphicon glyphicon-calendar"></span>
+						&nbsp;{$days_until_due}
+					</h1>
+				</a>
+				<p class="lead">Days Until Rent Due</p>
+			</div>
+			<div class="col-md-4 click_div">
+				<a href="newsfeed.php">
+					<h1>${$total}</h1>
+				</a>
+				<p class="lead">Property Balance</p>
+			</div>
+		</div>
+		<hr>
+		<!-- Pull information and present as collapsable items -->
+		<div class="accordion" id="accordion">
+			<div class="accordion-group">
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOverview">
+						<h3>Financial Overview</h3>
+					</a>
+				</div>
+				<div id="collapseOverview" class="accordion-body collapse in">
+					<div class="accordion-inner">
+					<!-- Checks for rent, maintenance and payout values -->
+					{if="$rent || $maintenance || $payout"}
+						<blockquote>
+							Use this tool to get a complete financial summary for a given time period using the selection tools below.
+						</blockquote>
+						<div class="row">	
+							<!-- Form to handle dates for financials search -->
+							<form id="datesearch" class="form-horizontal" method="post" action="property_financials.php">
+								<input type="hidden" name="property" value="{$results['property_id']}">
+								<div class="col-md-9 col-sm-12 col-xs-12">
+									<div class="input-group">
+										<input type="text" name="start" id="start" class="form-control datepicker" data-date-format="yyyy-mm-dd"  placeholder="2013-07-01"> 
+										<span class="input-group-addon">
+											to
+										</span> 
+										<input type="text" id="end" name="end" class="datepicker form-control" data-date-format="yyyy-mm-dd" placeholder="2014-07-01">
+										<span class="input-group-btn">
+											<button type="submit" name="search" value="Search" class="btn btn-success">Search</button>
+										</span>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- Table to display financial information -->
+					<div class="table-responsive">			
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<td>
+										<b>Date</b>
+									</td>
+									<td>
+										<b>Payout to Owner</b>
+									</td>
+									<td>
+										<b>Rent In</b>
+									</td>
+									<td>
+										<b>Maintenance Costs</b>
+									</td>
+									<td>
+										<b>Comment</b>
+									</td>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- Loop through financial movements, displays transaction amount and comment in table -->
+								{loop="total_table"}
+									<tr>
+										<td>{$value.datetime}</td>
+										<td>{if="$value.payout!=0"}${$value.payout/100}{/if}</td>
+										<td>{if="$value.cc_charge!=0"}${$value.cc_charge/100}{/if} {if="$value.other!=0"}${$value.other/100}{/if}</td>
+										<td>{if="$value.maintenance!=0"}${$value.maintenance/100}{/if}</td>
+										<td>{$value.comment}</td>
+									</tr>
+								{/loop}
+							</tbody>
+						</table>
+					</div>
+					<!-- Displays total -->
+					<b>Total: ${$total}</b> <br>
+					{else}
+						<div class="row">
+							<!-- Form to handle dates for financials search -->
+							<form id="datesearch" class="form-horizontal" method="post" action="property_financials.php">
+								<input type="hidden" name="property" value="{$results['property_id']}">
+								Select financial information from 
+								<div class="col-md-2">
+									<input type="text" name="start" id="start" class="datepicker form-control" data-date-format="yyyy-mm-dd" data-date="2013-02-20" placeholder="Start Date">
+								</div>
+								<div class="col-md-1">
+									<p style="text-align:center">to</p>
+								</div>
+								<div class="col-md-2">
+									<input type="text" id="end" name="end" class="datepicker form-control" data-date-format="yyyy-mm-dd" data-date="2013-02-20" placeholder="End Date">
+								</div>
+								<div class="col-md-2">
+									<button type="submit" name="search" value="Search" class="btn btn-success" >Search</button>
+								</div>
+							</form>
+						</div>	
+					</div>				
+						No information in this time frame.
+					{/if}
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+					<h3>Owner Payout</h3>
+				</a>
+			</div>
+			<div id="collapseTwo" class="accordion-body collapse in">
+				<div class="accordion-inner">
+					<!-- Form to handle adding payouts -->
+					<form id="issue" class="form-horizontal" method="post" action="api/financial.php">
+						<blockquote>Use this form to add a new payout. Feel free to add any comments.</blockquote>
+						<label>Amount:</label>
+						<input type="number" class="form-control" id="amount" name="amount">
+						<br>
+						<label>Comments:</label>
+						<textarea name="description" class="form-control"></textarea>
+						<br>
+						<!-- Hidden, required fields -->
+						<input type="hidden" name="ownership_id" value="{$ownership_id}">
+						<input type="hidden" name="property" value="{$property}">
+						<!-- End hidden fields -->
+						<button type="submit" name="api" value="addPayout"
+						class="btn btn-success" >Add Payout</button>
+					</form>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+{include="footer3"}
+<script src="js/bootstrap-datepicker.js">
+</script>
+<script>
+<!-- Function to select the financial year-->
+function financialYear(property, type) {
+	var start;
+	var end;
+	var year;
+	var next_year;
+		year = document.getElementById('fin_year').value;
+		start = year + "-07-01";
+		next_year = parseInt(year) + 1;
+		end =  next_year.toString() + "-06-30";
+	window.location = "property_financials.php?property=1"	+ "&start=" + start + "&end=" + end;
+}
+$('#start').datepicker()
+    .on('changeDate', function(e){
+        var y = e.date.getFullYear(),
+            _m = e.date.getMonth() + 1,
+            m = (_m > 9 ? _m : '0'+_m),
+            _d = e.date.getDate(),
+            d = (_d > 9 ? _d : '0'+_d);
+        $(this).text(y + '-' + m + '-' + d);
+    });
+$('#end').datepicker()
+    .on('changeDate', function(e){
+        var y = e.date.getFullYear(),
+            _m = e.date.getMonth() + 1,
+            m = (_m > 9 ? _m : '0'+_m),
+            _d = e.date.getDate(),
+            d = (_d > 9 ? _d : '0'+_d);
+        $(this).text(y + '-' + m + '-' + d);
+    });
+</script>

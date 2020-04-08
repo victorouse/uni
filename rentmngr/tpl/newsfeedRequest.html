@@ -1,0 +1,47 @@
+{include="header"}
+<body>   
+    <div class="container">
+        <br />
+        <legend>Add Request comment</legend>
+        <div class="well">
+            <!--This is a form to add a property to the database-->
+            <form id="comment" class="form-horizontal" method="post" 
+                  action="api/newsfeed.php">
+                <input type="hidden" name="user_id" value="{$poster_user_id}">
+                <div class="control-group">
+                    <!--This is the field to add an address-->
+                    <label class="control-label">Request comment: </label>
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <textarea rows="4" cols="50" name="request_description" form="comment" placeholder="Enter comment here..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group ">
+                    <!--This is the field to add a suburb-->
+                    <label class="control-label">Requires user id: </label>
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <input type="text" class="input-xlarge" 
+                                   id="requires_user_id" name="requires_user_id" 
+                                   placeholder="requires user id">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label"></label>
+                    <div class="controls">
+                        <!--This is the button to submit and to add 
+                                the property to the database-->
+                        <button type="submit" name="api" value="addRequest"
+                                class="btn btn-success" >Submit request</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <hr>
+    </div>
+</body>
+</html>

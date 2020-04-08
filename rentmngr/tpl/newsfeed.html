@@ -1,0 +1,156 @@
+{include="header3"}
+	<div class="container">
+		<!-- Heading, displays address and user name -->
+		<h1>{if="ISSET($property_address)"}{$property_address}, {$property_suburb}{else}Newsfeed for {$user_name}{/if}</h1>
+		<br>
+		<!-- Add a row for options such as filter, search and sort -->
+		<div class = "row" style="padding-bottom:10px;">
+			<!-- Dropdown buttons group for sorting options -->
+			<div class="input-group col-md-12" style="width:100%">
+				<div class="btn-group" style="width:100%">
+					<!-- Sort by time button, hidden on most phones -->
+					<div class="dropdown hidden-xs col-md-3">
+						<button  id="search_filter" type="button" class="btn btn-info dropdown-toggle" style="width:100%" data-toggle="dropdown">
+							Sort By Time <span class="caret"></span>
+						</button>
+						<ul  class="dropdown-menu" role="menu">
+							<li role="presentation">
+								<label data-toggle="tooltip" title="Sort in ascending order" class="active has_tooltip">
+									&nbsp;<a name="options" id="option1" href="newsfeed.php?sort_date">Sort By Time Ascending</a>
+								</label>
+							</li>
+							<li role="presentation"> 
+								<label data-toggle="tooltip" title="Sort in descending order" class="has_tooltip">
+									&nbsp;<a name="options" id="option2" href="newsfeed.php?sort_date_desc">Sort By Time Descending </a>
+								</label>
+							</li>
+						</ul>
+					</div>
+					<!-- Sort by time button, visible on most phones and hidden on larger devices -->
+					<div class="dropdown visible-xs col-xs-4">
+						<button  id="search_filter" type="button" class="btn btn-info dropdown-toggle" style="width:100%" data-toggle="dropdown">
+							Sort By <span class="caret"></span>
+						</button>
+						<ul  class="dropdown-menu" role="menu">
+							<li role="presentation">
+								<label data-toggle="tooltip" title="Sort in ascending order" class="active has_tooltip">
+											&nbsp;<a name="options" id="option1" href="newsfeed.php?sort_date">Sort By Time Ascending</a>
+								</label>
+							</li>
+							<li role="presentation"> 
+								<label data-toggle="tooltip" title="Sort in descending order" class="has_tooltip">
+									&nbsp;<a name="options" id="option2" href="newsfeed.php?sort_date_desc">Sort By Time Descending </a>
+								</label>
+							</li>
+						</ul>
+					</div>
+					<!-- Refine post type button, hidden on most phones -->	
+					<div class="dropdown hidden-xs col-md-3">
+						<button  id="search_filter" type="button" class="btn btn-info dropdown-toggle" style="width:100%" data-toggle="dropdown">
+							Refine Post <span class="caret"></span>
+						</button>
+						<ul  class="dropdown-menu" role="menu">
+							<li>
+								<label data-toggle="tooltip" title="Show all posts" class="active rdo has_tooltip">
+									&nbsp;<a name="options" id="option3" href="newsfeed.php"> Show All</a>
+								</label>
+							</li>
+							<li> 
+								<label data-toggle="tooltip" title="Show only inspection" class="rdo has_tooltip">
+									&nbsp;<a name="options" id="option4" href="newsfeed.php?show_inspection"> Show Inspections </a>
+								</label>
+							</li>
+							<li> 
+								<label data-toggle="tooltip" title="Search only issue" class="rdo has_tooltip">
+									&nbsp;<a name="options" id="option5" href="newsfeed.php?show_issue"> Show Issues </a>
+								</label>
+							</li>
+						</ul>
+					</div>
+					<!-- Refine post type button, visible on most phones and hidden on larger devices -->
+					<div class="dropdown visible-xs col-xs-4">
+						<button  id="search_filter" type="button" class="btn btn-info dropdown-toggle" style="width:100%" data-toggle="dropdown">
+						Refine <span class="caret"></span>
+						</button>
+						<ul  class="dropdown-menu" role="menu">
+							<li>
+								<label data-toggle="tooltip" title="Show all posts" class="active rdo has_tooltip">
+									&nbsp;<a name="options" id="option3" href="newsfeed.php"> Show All</a>
+								</label>
+							</li>
+							<li> 
+								<label data-toggle="tooltip" title="Show only inspection" class="rdo has_tooltip">
+									&nbsp;<a name="options" id="option4" href="newsfeed.php?show_inspection"> Show Inspections </a>
+								</label>
+							</li>
+							<li> 
+								<label data-toggle="tooltip" title="Search only issue" class="rdo has_tooltip">
+									&nbsp;<a name="options" id="option5" href="newsfeed.php?show_issue"> Show Issues </a>
+								</label>
+							</li>
+						</ul>
+					</div>
+					<!-- Show open/closed post button, hidden on most phones -->	
+					<div class="dropdown hidden-xs col-md-3">
+						<button  id="search_filter" type="button" class="btn btn-info dropdown-toggle" style="width:100%" data-toggle="dropdown">
+						Show <span class="caret"></span>
+						</button>
+						<ul  class="dropdown-menu" role="menu">
+							<li>
+								<label data-toggle="tooltip" title="Show all posts" class="active rdo has_tooltip">
+									&nbsp;<a name="options" id="option6" href="newsfeed.php"> Show All</a>
+								</label>
+							</li>
+							<li> 
+								<label data-toggle="tooltip" title="Show only open posts" class="rdo has_tooltip">
+									&nbsp;<a name="options" id="option7" href="newsfeed.php?show_open"> Show Open </a>
+								</label>
+							</li>
+							<li> 
+								<label data-toggle="tooltip" title="Search only closed posts" class="rdo has_tooltip">
+									&nbsp;<a name="options" id="option8" href="newsfeed.php?show_closed"> Show Closed </a>
+								</label>
+							</li>
+						</ul>
+					</div>
+					<!-- Show open/closed post button, visible on most phones and hidden on larger devices -->
+					<div class="dropdown visible-xs col-xs-4">
+						<button  id="search_filter" type="button" class="btn btn-info dropdown-toggle" style="width:100%" data-toggle="dropdown">
+						Show <span class="caret"></span>
+						</button>
+						<ul  class="dropdown-menu" role="menu">
+							<li>
+								<label data-toggle="tooltip" title="Show all posts" class="active rdo has_tooltip">
+									&nbsp;<a name="options" id="option6" href="newsfeed.php"> Show All</a>
+								</label>
+							</li>
+							<li> 
+								<label data-toggle="tooltip" title="Show only open posts" class="rdo has_tooltip">
+									&nbsp;<a name="options" id="option7" href="newsfeed.php?show_open"> Show Open </a>
+								</label>
+							</li>
+							<li> 
+								<label data-toggle="tooltip" title="Search only closed posts" class="rdo has_tooltip">
+									&nbsp;<a name="options" id="option8" href="newsfeed.php?show_closed"> Show Closed </a>
+								</label>
+							</li>
+						</ul>
+					</div>
+					<!-- Add post button, hidden on most phones -->
+					<div class="col-md-3 hidden-xs">
+						<a class="btn btn-success has_tooltip pull-right" data-toggle="tooltip" title="Add new property" href="addItem.php{if="ISSET($property_id)"}?property_id={$property_id}{/if}"><span class="glyphicon glyphicon-plus"></span> Add Post</a>
+					</div>
+					<!-- Thematic break, visible on most phones and hidden on larger devices -->
+					<div class="visible-xs">
+					<hr>
+					</div>
+					<!-- Add post button, visible on most phones and hidden on larger devices -->
+					<div class="col-xs-12 visible-xs">
+						<a class="btn btn-success has_tooltip pull-right" data-toggle="tooltip" title="Add new property" style="width:100%" href="addItem.php{if="ISSET($property_id)"}?property_id={$property_id}{/if}"><span class="glyphicon glyphicon-plus"></span> Post</a>
+					</div>		
+				</div>	
+			</div>
+		<!-- Loop over all items-->
+		{include="newsfeed_loop_mobile"}
+	</div>
+{include="footer3"}

@@ -1,0 +1,28 @@
+{include="header3"}
+<div class="container">
+<h1>Add Bank Payment </h1>
+<form class="form-horizontal" id="editDetails" role="edit" method="POST" action="api/financial.php?property={$property_id}">
+    <div class="form-group">
+        <label for="amount" class="col-xs-2 control-label">Amount</label>
+        <div class="col-xs-10">
+            <div class="form-inline">
+                <input name="amount" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="comment" class="col-xs-2 control-label">Comment</label>
+        <div class="col-xs-10">
+            <div class="form-inline">
+                <input name="comment" type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-2">
+                <button id="save" name="api" value="add_payment" type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>
+<hr />
+{include="footer3"}

@@ -1,0 +1,255 @@
+{loop="items"}
+		<hr>
+		<div class = "row" >
+		
+			<div class = "col-md-3">
+			<div class="panel panel-default">
+			<div class = "panel-heading">
+				
+				<p>
+					<h4>{$value.address}</h4>
+					<a href="view.php?property={$value.property_id}" class="btn btn-primary" style="width:100%" >Property Info</a> <hr>
+					<p>Posted by {$value.created_by_name} at {$value.date_created}</p>
+			        <form method="post" style="display:inline" action="api/newsfeed.php">
+					<input type="hidden" value="{$value.item_id}" id="item_id" name="item_id">					         
+			        
+					{if="$value.open == '0' && $user_type != 'Tenant'"}
+					  <hr>
+			              <button type="submit" name="api" value= "close" class="btn btn-danger" style="width:47.5%">Close Item</button>
+
+			             
+					{/if}
+					
+					{if="$value.type == 'issue' && $user_type == 'Agent'"}
+						{if="$value.escalated == '0' && (($value.issue_category=='structural' && $value.notify_structural == '0') ||  			($value.issue_category=='electrical' && $value.notify_electrical == '0')
+							|| ($value.issue_category=='plumbing' && $value.notify_plumbing == '0') || ($value.issue_category=='security' && $value.notify_security == '0'))"}
+							
+							{if="$value.open == '0'"}
+							<button type="submit" name="api" value= "escalate" class="btn btn-warning pull-right" style="width:47.5%">Escalate Item</button>
+							
+							{else}
+							<hr>
+							<button type="submit" name="api" value= "escalate" class="btn btn-warning" style="width:47.5%">Escalate Item</button>
+							{/if}
+							
+					   {/if}
+					{/if}
+						 
+			         			         
+					{if="$value.escalated == '1' && $user_type != 'Owner'"}
+
+						<hr>
+						<p class="alert alert-danger" style="margin-bottom:0px">This issue has been escalated</p>
+						
+					{/if}
+					</form>
+				
+					
+
+				</p>
+			</div>
+			</div>
+			</div>
+
+				<!-- larger span to contain extra information -->
+				<div class = "col-md-9 ">
+				
+					<!-- Now do special stuff if it's an issue -->
+					{if="$value.type == 'issue'"}
+						<h4>{if="$value.issue_category=='electrical'"}Electrical
+							{elseif="$value.issue_category=='structural'"}Structural
+							{elseif="$value.issue_category=='security'"}Security
+							{elseif="$value.issue_category=='plumbing'"}Plumbing
+							{/if} Issue</h4>
+					{/if}
+
+					<!-- Now do special stuff if it's an inspection -->
+					{if="$value.type == 'inspection'"}
+						<h4>Inspection Requested</h4>
+					{/if}
+					
+					<!-- Check escalation value of an issue -->
+					
+
+					<!-- Add buttons and description of item -->
+					<blockquote>
+						 {$value.description}</blockquote>
+
+					<!-- Make collapsable subitems-->
+					
+						
+							
+							  
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"  href="#collapse{$value.item_id}">
+									<b>View Comments <span class="badge badge-primary">{$value.numbersubitems}</span></b><br>
+								</a>
+							  
+					
+					
+							<div id="collapse{$value.item_id}" class="panel-collapse collapse">
+								<div class="panel-body">
+									<br>
+
+									<!-- And now add all subitems -->
+									{loop="value.subitems"}
+
+										<!-- Check if system subitems item is successful and do something if it is or if it isn't -->
+										{if="$value.type == 'system'"}
+											<div>
+												<blockquote>
+													<p class="
+														{if="$value.success=='0'"}
+															text-success"> <i class="glyphicon glyphicon-thumbs-up"></i>  {$value.description} </p> 
+															
+														{else}
+															text-danger"> <i class="glyphicon glyphicon-thumbs-up"></i>  {$value.description} </p>
+															
+														{/if}
+
+														
+													
+												</blockquote>
+											</div>
+										{/if}
+
+										<!-- Check if request subitem has been approved and do something if it is or if it isn't -->
+										{if="$value.type == 'request'"}
+
+											<div class="">
+												<blockquote>
+													<img class="pull-left" style="margin-right:10px; margin-top:10px" src="../img/a.png"/>
+													<p><strong>{$value.poster_name} 
+															{if="$value.approved"}
+															requested approval
+															{else}
+																is requesting approval
+																
+															{/if}
+																{if="$user_id==$value.requires_user_id"} 
+																	from you
+																{else}
+																	from {$value.requires_name}
+																{/if}:</strong>
+													</p>
+													<p>{$value.description}</p>
+													<small>Posted at {$value.datetime}</small>
+												</blockquote>
+
+												{if="$value.approved==false"}
+													{if="$user_id==$value.requires_user_id"}
+														<a class="btn btn-success">Approve</a> <a class="btn btn-danger">Deny</a> 
+													{else}
+														<p class="text-warning">This request is still pending approval.</p>
+													{/if}
+												{/if}
+											</div>
+											<br>
+										{/if}
+
+										<!-- Pull info for comment subitems -->
+										{if="$value.type == 'comment'"}
+											<div class="">
+												<blockquote>
+													<img class="pull-left" style="margin-right:10px; margin-top:10px" src="../img/y.png"/>
+													<p><strong>{$value.commenter_name}</strong></p>
+													<p>{$value.description}</p>
+													<small>Posted at {$value.datetime}</small>
+												</blockquote>
+											</div>
+											<br>
+										{/if}				
+
+										<!-- Pull info for tenant comment subitems -->
+										{if="$value.type == 'tcomment'"}
+											<div class="">
+												<blockquote>
+													<img class="pull-left" style="margin-right:10px; margin-top:10px" src="../img/a.png"/>
+													<p><strong>{$value.userName}</strong></p>
+													<p>{$value.description}</p>
+													<small>Posted at {$value.datetime}</small>
+													<button class="btn btn"> Reply </button>
+												</blockquote>
+											</div>
+											<br>
+										{/if}
+									{/loop}
+									{if="$value.open == '1'"}
+										<blockquote class="pull-left" style="margin-right:10px; margin-top:10px">
+											<p class="alert alert-danger">This item has been closed. You can no longer comment on this item.</p>
+										</blockquote>
+									{/if}
+								</div>
+								</div>
+								{if="$value.open == '0'"}
+								<div class="panel-body">
+									<ul class="nav nav-tabs" id="myTab{$value.item_id}">
+										<li class="active"><a href="#comment{$value.item_id}" data-toggle="tab">Comment</a></li>
+										<li><a href="#request{$value.item_id}" data-toggle="tab">Request</a></li>
+									</ul>
+									<div class="tab-content">
+										<div class="tab-pane active" id="comment{$value.item_id}">
+											 <form id="comment" class="form-horizontal" method="post" 
+                 								 action="api/newsfeed.php">
+											<!-- Add new comment form -->
+												<input type="hidden" name="user_id" value="{$user_id}">
+												<input type="hidden" name="item_id" value="{$value.item_id}">
+											<label>Add a new comment</label>
+											<textarea name="description" class="form-control"></textarea>
+											<br>
+											<button type="submit" name="api" value="addComment"
+                               				 class="btn btn-success" >Submit Comment</button>
+											</form>
+
+										</div>
+										<div class="tab-pane" id="request{$value.item_id}">
+											<form id="comment" class="form-horizontal" method="post" 
+                 								 action="api/newsfeed.php">
+											<!-- Add new comment form -->
+												<input type="hidden" name="posted_user_id" value="{$user_id}">
+												<input type="hidden" name="item_id" value="{$value.item_id}">
+											<label>Add a new request</label>
+											<textarea name="request_description" class="form-control"></textarea>
+											<label>Requires approval from:</label>
+											<!-- Request tenant -->
+											{if="!is_null($value.tenant_id)"}
+												{if="$value.tenant_id!=$user_id"}
+												<div class="radio">
+												<label><input type="radio" name="requires_user_id" value="{$value.tenant_id}">{$value.tenant_name} (Tenant)</label>
+												</div>
+
+												{/if}
+											{/if}
+											<!-- Request owner -->
+											{if="!is_null($value.owner_id)"}
+												{if="$value.owner_id!=$user_id"}
+												<div class="radio">
+												<label><input type="radio" name="requires_user_id" value="{$value.owner_id}">{$value.owner_name} (Owner)</label>
+												</div>
+
+												{/if}
+											{/if}
+
+											<!-- Request agent -->
+											{if="!is_null($value.agent_id)"}
+												{if="$value.agent_id!=$user_id"}
+												<div class="radio">
+												<label><input type="radio" name="requires_user_id" value="{$value.agent_id}">{$value.agent_name} (Agent)</label>
+												</div>
+
+												{/if}
+											{/if}
+											<br>
+											<button type="submit" name="api" value="addRequest"
+                               				 class="btn btn-success" >Submit Request</button>
+											</form>
+										</div>
+									</div>
+								
+							</div>
+							{/if}
+						
+					
+				</div>		
+			</div>
+			
+	{/loop}

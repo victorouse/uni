@@ -1,0 +1,35 @@
+ <div class="container">
+ 		<h1>Latest News</h1>
+
+		<hr>
+	<!-- Loop over all items-->
+	{include="tnewsfeed_loop_mini"}
+</div>
+{include="footer3"}
+
+<script>
+$(document).ready(function() {
+	$(".click_div").click(function(){
+    	window.location = $(this).find("a").attr("href");
+    	return false;
+	});
+});
+
+</script>
+<script src="js/quikFilter.js">
+</script>
+<script>
+$(function(){
+	$(".has_tooltip").tooltip();
+
+	// Need to add a time interval so that bootstrap.js can update the controls
+	$(".rdo").on("mouseup", function(){
+		setInterval(function(){
+			$("#searchfield").trigger("keyup")
+		},0)
+	});
+
+	$("#searchfield").on("keyup", {btngroup:"#search_filter"}, advFilter);	
+	
+});
+</script>

@@ -1,0 +1,35 @@
+{include="header"}
+<body>   
+    <div class="container">
+        <br />
+        <legend>Add Comment</legend>
+        <div class="well">
+            <!--This is a form to add a property to the database-->
+            <form id="comment" class="form-horizontal" method="post" 
+                  action="api/newsfeed.php">
+                <input type="hidden" name="user_id" value="{$commenter_id}">
+                <div class="control-group">
+                    <!--This is the field to add an address-->
+                    <label class="control-label">Comment: </label>
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <textarea rows="4" cols="50" name="comment_description" form="comment" placeholder="Enter comment here..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label"></label>
+                    <div class="controls">
+                        <!--This is the button to submit and to add 
+                                the property to the database-->
+                        <button type="submit" name="api" value="addComment"
+                                class="btn btn-success" >Submit comment</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <hr>
+    </div>
+</body>
+</html>

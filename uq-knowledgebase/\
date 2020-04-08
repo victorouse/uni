@@ -1,0 +1,114 @@
+<?php
+    // Connect to database
+    include("inc/api.php");
+
+    $issue = $model->getIssue($_GET['id']);
+    $user = $model->getUser($issue['author']);
+
+    if (!session_id()) {
+        session_start();
+        $_SESSION['voted'] = false;
+    }
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>UQ Knowledgebase</title>
+        <?php include("inc/head.php"); ?>
+        <script src="js/voting.js"></script>
+        <script>
+            $(document).ready(function() {
+                $(".collapse").collapse();
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h3 class="text-center"><a href="topics.php">UQ Knowledgebase</a></h3>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default" id="issue">
+                        <div class="panel-heading" style="overflow:hidden">
+                            <div class="post-info pull-left">
+                                <input type="hidden" id="issueID" value="<?php echo $issue['IssueID']; ?>">
+                                <h2 class="panel-title issue-title"><?php echo $issue['issue']; ?></h2>
+                                <div class="author">
+                                    Posted by <?php echo $user['name']; ?> <span id="create-date"> on <?php echo $issue['create_dt']; ?></span>
+                                </div>
+                                <?php if ($issue['tags']) :?>
+                                <div class="tags">
+                                    <?php $tags = explode(',', trim($issue['tags']));
+                                        foreach($tags as $tag) {
+                                            echo "<span class='label label-primary tag'>" . $tag . "</span>";
+                                        }
+                                    ?>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="votebox pull-right">
+                                <span class="votes">
+                                    <?php echo ($issue['upvotes'] - $issue['downvotes']); ?>
+                                </span>
+                                <div class="btn-group">
+                                    <button type="button" class="vote btn btn-sm btn-default" id="issue-up" data-action="up">
+                                        <span class="glyphicon glyphicon-chevron-up"></span>
+                                    </button>
+                                    <button type="button" class="vote btn btn-sm btn-default" id="issue-down" data-action="down">
+                                        <span class="glyphicon glyphicon-chevron-down"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <?php echo $issue['answer']; ?>
+                        </div>
+                        <?php if ($issue['update_dt']) :?>
+                        <div class="panel-footer">
+                            <div class="update-info">
+                                Last updated: <?php echo $issue['update_dt']; ?> 
+                                <span class="revision pull-right"> Revision: <?php echo $issue['revision']; ?></span>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                        
+                    </div>
+                        <div id="newpost">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title new-post" data-toggle="collapse" data-target=".message-body">
+                                    Write a comment...
+                                    </h3>
+                                </div>
+                                <div class="panel-body message-body collapse in">
+                                    <form id="postForm" action="inc/api.php?ap=newComment" method="POST" enctype="multipart/form-data">
+                                        <?php include("postbox.php"); ?>
+                                        <button type="submit" class="btn btn-primary" style="margin-top:15px">Post</button>
+                                        <button type="reset" class="btn btn-primary" style="margin-top:15px">Clear</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="comments">
+                            <?php if (($comments = $model->getIssueComments($issue['IssueID']))) : ?>
+
+                            <?php foreach ($comments as $comment) : ?>
+                            <div class="panel panel-default comment">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <?php echo $comment['title']; ?>
+                                    </h3>
+                                </div>
+                                <div class="panel-body message-body">
+                                    <?php echo $comment['comment']; ?>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+                </div>   
+            </div>
+        </div>
+    </body>
+</html>
+

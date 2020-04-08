@@ -1,0 +1,120 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 Profile Information
+    hr
+
+  form.form-horizontal(action='/account/profile', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-2.control-label(for='email') Email
+      .col-sm-4
+        input.form-control(type='email', name='email', id='email', value='#{user.email}')
+    .form-group
+      label.col-sm-2.control-label(for='name') Name
+      .col-sm-4
+        input.form-control(type='text', name='name', id='name', value='#{user.profile.name}')
+    .form-group
+      label.col-sm-2.control-label(for='gender') Gender
+      .col-sm-4(style='margin-left: 20px')
+        label.radio
+          input(type='radio', checked=user.profile.facebook.public.gender=='male', name='gender', value='male', data-toggle='radio')
+          span Male
+        label.radio
+          input(type='radio', checked=user.profile.facebook.public.gender=='female', name='gender', value='female', data-toggle='radio')
+          span Female
+    .form-group
+      label.col-sm-2.control-label(for='location') Location
+      .col-sm-4
+        input.form-control(type='text', name='location', id='location', value='#{user.profile.facebook.public.location}')
+    .form-group
+      .col-sm-offset-2.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          span.ion-edit
+          | Update Profile
+
+  .page-header
+    hr
+    h3 Change Password
+    hr
+
+  form.form-horizontal(action='/account/password', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-2.control-label(for='password') New Password
+      .col-sm-4
+        input.form-control(type='password', name='password', id='password')
+    .form-group
+      label.col-sm-2.control-label(for='confirmPassword') Confirm Password
+      .col-sm-4
+        input.form-control(type='password', name='confirmPassword', id='confirmPassword')
+    .form-group
+      .col-sm-offset-2.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          span.ion-locked
+          | Change Password
+
+  if user.facebook
+    .page-header
+      hr
+      h3 Facebook Account
+      hr
+
+    p By default we only use your public profile to help tailor search results.
+    p For better search results, select from the options below to enable additional access to your information.
+
+    form.form-horizontal(action='/account/profile/facebook/additionalScopes', method='POST')
+      input(type='hidden', name='_csrf', value=_csrf)
+      .form-group
+        .col-sm-4(style='margin-left:20px')
+          label.checkbox
+            input(type='checkbox', checked=user.profile.facebook.additionalScopes.likes.length > 0, name='likes')
+            | <span>Likes<span>
+          label.checkbox
+            input(type='checkbox', checked=user.profile.facebook.additionalScopes.friends.length > 0, name='friends')
+            | <span>Friends<span>
+      .form-group
+        .col-sm-4
+          button.btn.btn.btn-primary(type='submit')
+            span.ion-edit
+            | Update Profile
+
+  .page-header
+    hr
+    h3 Delete Account
+    hr
+
+  p(style='margin-bottom: 20px') You can delete your account, but keep in mind this action is irreversible.
+  form(action='/account/delete', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    button.btn.btn-danger(type='submit')
+      span.ion-trash-b
+      | Delete my account
+
+  .page-header
+    hr
+    h3 Linked Accounts
+    hr
+
+
+  .col-sm-4(style='padding-left: 0')
+    p(style='margin-bottom: 20px') You can link or unlink multiple accounts.
+    if user.google
+      a.btn.btn-block.btn-google-plus.btn-social(href='/account/unlink/google')
+        i.fa.fa-google-plus
+        | Unlink your Google account
+    else
+      a.btn.btn-block.btn-google-plus.btn-social(href='/auth/google')
+        i.fa.fa-google-plus
+        | Link your Google account
+
+    if user.facebook
+      a.btn.btn-block.btn-facebook.btn-social(href='/account/unlink/facebook')
+        i.fa.fa-facebook
+        | Unlink your Facebook account
+    else
+      a.btn.btn-block.btn-facebook.btn-social(href='/auth/facebook')
+        i.fa.fa-facebook
+        | Link your Facebook account
+
