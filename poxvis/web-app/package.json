@@ -60,7 +60,7 @@
     "uuid": "^2.0.1",
     "vis": "^4.9.0",
     "webpack": "^1.8.4",
-    "webpack-dev-server": "^1.8.0"
+    "webpack-dev-server": "^3.10.3"
   },
   "devDependencies": {
     "babel-eslint": "^3.0.1",
