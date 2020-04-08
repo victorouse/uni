@@ -1,0 +1,88 @@
+body {
+    margin:50px 0px; padding:0px;
+    text-align:center;
+}
+
+#container {
+    position: fixed;
+    left: 25%;
+}
+    
+#content {
+    width:660px;
+    margin:0px auto;
+    text-align:left;
+    background-color:#eee;
+    float:left;
+}
+
+#current {
+    margin: 5px;
+}
+
+#current img {
+    width: 640px;
+    height: 480px;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right:5px;
+}
+
+#steps img {
+    width: 150px;
+    height: 90px;
+    margin: 5px;
+}
+
+#steps {
+    padding: 5px;
+}
+
+#steps img.selected {
+    border: 3px solid;
+}
+
+#tests {
+    float:left;
+    padding-left: 10px;
+    width: 450px;
+}
+
+#testsuite {
+    font-size: 12px;
+    text-align: left;
+    background-color:#eee;
+}
+
+#testsuite h3 {
+    background-color: grey;
+}
+
+.test {
+    border-bottom: 1px solid;
+    padding: 5px;
+}
+
+.failure {
+    border-bottom: 1px solid;
+    padding: 5px;
+    background: #FFAD99;
+}
+
+.selectedtest {
+    border-bottom: 1px solid;
+    padding: 5px;
+    background: #B2C2E0;
+}
+
+.title {
+    padding: 7px;
+    background: url("../images/title.png") repeat-x;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    border-bottom: 2px solid #336796;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-size: 12px;
+}
